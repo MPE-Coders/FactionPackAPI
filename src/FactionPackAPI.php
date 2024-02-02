@@ -23,6 +23,8 @@ class FactionPackAPI extends PluginBase{
      */
     public function onEnable(): void
     {
+        $this->saveResource("factions.yml");
+
         self::$instance = $this;
         /* Инициализация дебагера */
         new TerminalLogger("MSK");

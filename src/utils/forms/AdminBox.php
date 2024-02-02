@@ -33,6 +33,11 @@ class AdminBox {
         self::$instance = $this;
     }
 
+    /**
+     * Главная страница управления
+     * @param $sender
+     * @return bool
+     */
     public static function sendMainForm($sender) : bool
     {
         $form = new SimpleForm(function (Player $sender, $data) : void {
@@ -44,11 +49,14 @@ class AdminBox {
             if ($data == 0)
                 self::sendAdminFactionsPage($sender, $data);
             if ($data == 1)
+                self::sendAdminCreateFactionPage($sender, $data);
+            if ($data == 2)
                 self::sendAdminPlayersPage($sender, $data);
         });
         $form->setTitle(FactionPackAPI::PREFIX);
         $form->setContent("Список доступных функций:");
-        $form->addButton("Управление фракциями");
+        $form->addButton("Управление существующими фракциями");
+        $form->addButton("Создать новую фракцию");
         $form->addButton("Управление игроками");
         $sender->sendForm($form);
         return true;
@@ -66,7 +74,9 @@ class AdminBox {
         });
         $form->setTitle(FactionPackAPI::PREFIX);
         $form->setContent("Список доступных фракций:");
-        foreach (FactionAPI::getFactionList(Faction::TYPE_ARRAY) as $faction){
+        $factionList = FactionAPI::getFactionList(Faction::TYPE_ARRAY);
+
+        foreach ($factionList as $faction){
             $form->addButton($faction->getName(), 0, $faction->getImage());
         }
         $sender->sendForm($form);
@@ -162,5 +172,9 @@ class AdminBox {
     public static function getAdminPlayerBox() : AdminPlayerBox
     {
         return self::getInstance()->adminBoxPlayerBox;
+    }
+
+    private static function sendAdminCreateFactionPage(Player $sender, $data)
+    {
     }
 }
