@@ -1,0 +1,19 @@
+---
+name: FactionPackAPI
+version: 1.1.0
+main: XackiGiFF\FactionPackAPI\FactionPackAPI
+api: 5.7.1
+src-namespace-prefix: XackiGiFF\FactionPackAPI
+authors:
+  - "XackiGiFF"
+  - "MPE: Coders"
+website: vk.com/mpe_coders
+
+permissions:
+  faction.job.use:
+    default: true
+    description: FactionAPIPack jobs
+  faction.job.admin:
+    default: op
+    description: Доступ для админов
+...
