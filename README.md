@@ -160,3 +160,4 @@ Manager::addToManager(Manager::MODEL_USERS, self::getName(), $this);
 
 
 test
+
