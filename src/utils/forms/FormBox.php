@@ -29,11 +29,15 @@ class FormBox {
         });
         $form->setTitle(FactionPackAPI::PREFIX);
         $form->setContent("Список доступных фракций:");
-        foreach (FactionAPI::getFactionList(Faction::TYPE_ARRAY) as $faction){
-                $form->addButton($faction->getName(), 0, $faction->getImage());
+
+        $factionList = FactionAPI::getFactionList(Faction::TYPE_ARRAY);
+        foreach ($factionList as $faction) {
+            $form->addButton($faction->getName(), 0, $faction->getImage());
         }
+
         $sender->sendForm($form);
         return true;
+
     }
 
     /**
@@ -92,8 +96,9 @@ class FormBox {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Вы решили не увольняться.");
             }
         });
+        $player = FactionAPI::getPlayer($sender->getName());
         $form->setTitle(FactionPackAPI::PREFIX);
-        $form->setContent("§eВы хотите уволиться с работы? Вы больше не будете получать прибыль.");
+        $form->setContent("§eВаша работа: {$player->getRank()->getName()}.\n Ваш ранг:{$player->getFaction()->getName()}.");
         $form->setButton1("Уволиться");
         $form->setButton2("Остаться");
         $sender->sendForm($form);
