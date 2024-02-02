@@ -92,8 +92,9 @@ class FormBox {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Вы решили не увольняться.");
             }
         });
+        $player = FactionAPI::getPlayer($sender->getName());
         $form->setTitle(FactionPackAPI::PREFIX);
-        $form->setContent("§eВы хотите уволиться с работы? Вы больше не будете получать прибыль.");
+        $form->setContent("§eВаша работа: {$player->getRank()->getName()}.\n Ваш ранг:{$player->getFaction()->getName()}.");
         $form->setButton1("Уволиться");
         $form->setButton2("Остаться");
         $sender->sendForm($form);
