@@ -40,6 +40,7 @@ final class Faction
         $this->name = $name;
     }
 
+
     public function getImage() : string
     {
         return $this->image ?? 'textures/items/diamond';
