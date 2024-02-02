@@ -20,11 +20,17 @@ class CustomPlayer
     public int $limit;
 
     public Config $config;
+    private string $userDataFolder;
 
     public function __construct($playerName){
         $this->name = $playerName;
 
-        $this->config = new Config(Manager::getDataFolderPath() . 'players/' . $playerName . '_data.yml',Config::YAML);
+        $this->userDataFolder = Manager::getDataFolderPath() . "players/";
+
+        if(!file_exists($this->userDataFolder))
+            @mkdir($this->userDataFolder, 0777, true);
+
+        $this->config = new Config($this->userDataFolder . $playerName . '_data.yml',Config::YAML);
     }
 
     public function getFaction() : Faction
