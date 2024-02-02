@@ -29,11 +29,15 @@ class FormBox {
         });
         $form->setTitle(FactionPackAPI::PREFIX);
         $form->setContent("Список доступных фракций:");
-        foreach (FactionAPI::getFactionList(Faction::TYPE_ARRAY) as $faction){
-                $form->addButton($faction->getName(), 0, $faction->getImage());
+
+        $factionList = FactionAPI::getFactionList(Faction::TYPE_ARRAY);
+        foreach ($factionList as $faction) {
+            $form->addButton($faction->getName(), 0, $faction->getImage());
         }
+
         $sender->sendForm($form);
         return true;
+
     }
 
     /**
