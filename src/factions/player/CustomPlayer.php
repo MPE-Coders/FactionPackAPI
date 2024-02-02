@@ -64,7 +64,7 @@ class CustomPlayer
     public function setFaction($name): void
     {
         if(isset(Manager::$factions[$name])){
-                $this->faction = Manager::getFaction($name);
+            $this->faction = Manager::getFaction($name);
         }  else {
             TerminalLogger::warning("Фракции ".$name." не существует!");
             TerminalLogger::warning("Доступные фракции:");
@@ -105,15 +105,15 @@ class CustomPlayer
 
     public function setRank($rank_id) : void
     {   if(isset($rank_id)) {
-            if(Manager::isCorrectRank(self::getFaction(), $rank_id)){
-                $this->rank = self::getFaction()->getRank($rank_id);
-            } else {
-                TerminalLogger::warning("Ранга ".$rank_id." не существует!");
-                TerminalLogger::warning("Доступные ранги у фракции ".self::getFaction()->getName().":");
-                TerminalLogger::notice(PHP_EOL.self::getFaction()->getRankList(Faction::TYPE_STRING));
-                $this->rank = Manager::getFaction(Manager::NULL_FACTION)->getRank(Manager::NULL_RANK);
-            }
+        if(Manager::isCorrectRank(self::getFaction(), $rank_id)){
+            $this->rank = self::getFaction()->getRank($rank_id);
+        } else {
+            TerminalLogger::warning("Ранга ".$rank_id." не существует!");
+            TerminalLogger::warning("Доступные ранги у фракции ".self::getFaction()->getName().":");
+            TerminalLogger::notice(PHP_EOL.self::getFaction()->getRankList(Faction::TYPE_STRING));
+            $this->rank = Manager::getFaction(Manager::NULL_FACTION)->getRank(Manager::NULL_RANK);
         }
+    }
     }
 
     /**
@@ -140,7 +140,7 @@ class CustomPlayer
     {
 
         $serializedContents = [ "faction" => self::getFaction()->getId(),
-                                "rank"     => self::getRank()->getId()];
+            "rank"     => self::getRank()->getId()];
         self::getConfig()->setAll($serializedContents);
         self::getConfig()->save();
         Manager::addToManager(Manager::MODEL_USERS, self::getName(), $this);

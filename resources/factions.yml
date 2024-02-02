@@ -1,0 +1,1113 @@
+f1:
+  type: SMI
+  name: "Организация СМИ"
+  ranks:
+    r1:
+      name: "Уборщик СМИ"
+      price: 1000
+      pay: 300
+      time: 20
+      default: true
+    r2:
+      name: "Стажер СМИ"
+      price: 1500
+      pay: 500
+      time: 20
+    r3:
+      name: "Старший стажер СМИ"
+      price: 2500
+      pay: 750
+      time: 20
+    r4:
+      name: "Ведущий СМИ"
+      price: 6000
+      pay: 1000
+      time: 20
+    r5:
+      name: "Оператор СМИ"
+      price: 15000
+      pay: 2000
+      time: 20
+    r6:
+      name: "Корреспондент СМИ"
+      price: 50000
+      pay: 3500
+      time: 20
+    r7:
+      name: "Журналист СМИ"
+      price: 120000
+      pay: 6100
+      time: 20
+      special_skills:
+        can_write: true
+      can_write: true
+    r8:
+      name: "Старший журналист СМИ"
+      price: 250000
+      pay: 8000
+      time: 20
+      special_skills:
+        can_write: true
+        can_manage:
+          manage_type:
+            - "up"
+          factions:
+            f1:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+    r9:
+      name: "Реквизитор СМИ"
+      price: 500000
+      pay: 10000
+      time: 20
+      special_skills:
+        can_write: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f1:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+    r10:
+      name: "Гример СМИ"
+      price: 750000
+      pay: 12000
+      time: 20
+      special_skills:
+        can_write: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f1:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+    r11:
+      name: "Режиссер СМИ"
+      price: 1000000
+      pay: 15000
+      time: 20
+      special_skills:
+        can_write: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f1:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r10
+    r12:
+      name: "Сценарист СМИ"
+      price: 2500000
+      pay: 20000
+      time: 20
+      special_skills:
+        can_write: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f1:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r11
+    r13:
+      name: "Зам глава СМИ"
+      price: 4000000
+      pay: 30000
+      time: 20
+      special_skills:
+        can_write: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f1:
+              - r9
+              - r10
+              - r11
+              - r12
+    r14:
+      name: "Глава СМИ"
+      price: -1
+      pay: 50000
+      time: 20
+      special_skills:
+        can_write: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f1:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+f2:
+  type: HOSPITAL
+  name: "Клиника"
+  ranks:
+    r1:
+      name: "Санитар"
+      price: 1000
+      pay: 300
+      time: 20
+      default: true
+    r2:
+      name: "Старший санитар"
+      price: 1500
+      pay: 500
+      time: 20
+    r3:
+      name: "Уборщик"
+      price: 2500
+      pay: 750
+      time: 20
+    r4:
+      name: "Работник регистратуры"
+      price: 6000
+      pay: 1000
+      time: 20
+    r5:
+      name: "Водитель"
+      price: 15000
+      pay: 2000
+      time: 20
+      special_skills:
+        can_health: true
+    r6:
+      name: "Мед брат/сестра"
+      price: 50000
+      pay: 3500
+      time: 20
+      special_skills:
+        can_health: true
+    r7:
+      name: "Детский Доктор"
+      price: 120000
+      pay: 6100
+      time: 20
+      special_skills:
+        can_health: true
+    r8:
+      name: "Косметолог"
+      price: 250000
+      pay: 8000
+      time: 20
+      special_skills:
+        can_health: true
+        can_manage:
+          manage_type:
+            - "up"
+          factions:
+            f2:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+    r9:
+      name: "Стоматолог"
+      price: 500000
+      pay: 10000
+      time: 20
+      special_skills:
+        can_health: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f2:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+    r10:
+      name: "Офтальмолог"
+      price: 750000
+      pay: 12000
+      time: 20
+      special_skills:
+        can_health: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f2:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+    r11:
+      name: "Психолог"
+      price: 1000000
+      pay: 15000
+      time: 20
+      special_skills:
+        can_health: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f2:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+    r12:
+      name: "Хирург"
+      price: 2500000
+      pay: 20000
+      time: 20
+      special_skills:
+        can_health: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f2:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+    r13:
+      name: "Зав врач клиники"
+      price: 4000000
+      pay: 30000
+      time: 20
+      special_skills:
+        can_health: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f2:
+              - r9
+              - r10
+              - r11
+              - r12
+    r14:
+      name: "Глав врач клиники"
+      price: -1
+      pay: 50000
+      time: 20
+      special_skills:
+        can_health: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f2:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+f3:
+  type: ARMY
+  name: "Армия"
+  ranks:
+    r1:
+      name: "Рядовой"
+      price: 1000
+      pay: 300
+      time: 20
+      default: true
+    r2:
+      name: "Ефрейтор"
+      price: 1500
+      pay: 500
+      time: 20
+    r3:
+      name: "Мл. Сержант"
+      price: 2500
+      pay: 750
+      time: 20
+    r4:
+      name: "Ст. Сержант"
+      price: 6000
+      pay: 1000
+      time: 20
+    r5:
+      name: "Старшина"
+      price: 15000
+      pay: 2000
+      time: 20
+    r6:
+      name: "Прапорщик"
+      price: 50000
+      pay: 3500
+      time: 20
+      special_skills:
+        can_arrest: true
+    r7:
+      name: "Мл. Лейтенант"
+      price: 120000
+      pay: 6100
+      time: 20
+      special_skills:
+        can_arrest: true
+    r8:
+      name: "Лейтенант"
+      price: 250000
+      pay: 8000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+          factions:
+            f3:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+    r9:
+      name: "Ст. Лейтенант"
+      price: 500000
+      pay: 10000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f3:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+    r10:
+      name: "Капитан"
+      price: 750000
+      pay: 12000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f3:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+    r11:
+      name: "Майор"
+      price: 1000000
+      pay: 15000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f3:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+    r12:
+      name: "Полковник"
+      price: 2500000
+      pay: 20000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f3:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+    r13:
+      name: "Генерал"
+      price: 4000000
+      pay: 30000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f3:
+              - r9
+              - r10
+              - r11
+              - r12
+    r14:
+      name: "Главнокомандующий"
+      price: -1
+      pay: 50000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f3:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+              - r13
+f4:
+  type: POLICE
+  name: "Полиция"
+  ranks:
+    r1:
+      name: "Рядовой"
+      price: 1000
+      pay: 300
+      time: 20
+      default: true
+    r2:
+      name: "Ефрейтор"
+      price: 1500
+      pay: 500
+      time: 20
+    r3:
+      name: "Мл. Сержант"
+      price: 2500
+      pay: 750
+      time: 20
+    r4:
+      name: "Ст. Сержант"
+      price: 6000
+      pay: 1000
+      time: 20
+    r5:
+      name: "Старшина"
+      price: 15000
+      pay: 2000
+      time: 20
+    r6:
+      name: "Прапорщик"
+      price: 50000
+      pay: 3500
+      time: 20
+      special_skills:
+        can_arrest: true
+    r7:
+      name: "Мл. Лейтенант"
+      price: 120000
+      pay: 6100
+      time: 20
+      special_skills:
+        can_arrest: true
+    r8:
+      name: "Лейтенант"
+      price: 250000
+      pay: 8000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+          factions:
+            f4:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+    r9:
+      name: "Ст. Лейтенант"
+      price: 500000
+      pay: 10000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f4:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+    r10:
+      name: "Капитан"
+      price: 750000
+      pay: 12000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f4:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+    r11:
+      name: "Майор"
+      price: 1000000
+      pay: 15000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f4:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+    r12:
+      name: "Полковник"
+      price: 2500000
+      pay: 20000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f4:
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+    r13:
+      name: "Генерал"
+      price: 4000000
+      pay: 30000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f4:
+              - r9
+              - r10
+              - r11
+              - r12
+    r14:
+      name: "Главнокомандующий"
+      price: -1
+      pay: 50000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f4:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+              - r13
+f5:
+  type: MAFIA
+  name: "Мафия"
+  ranks:
+    r1:
+      name: "Новичок"
+      price: 1000
+      pay: 300
+      time: 20
+      default: true
+    r2:
+      name: "Подстилка"
+      price: 1500
+      pay: 500
+      time: 20
+    r3:
+      name: "Простой"
+      price: 2500
+      pay: 750
+      time: 20
+    r4:
+      name: "Тузик"
+      price: 6000
+      pay: 1000
+      time: 20
+    r5:
+      name: "Воришка"
+      price: 15000
+      pay: 2000
+      time: 20
+    r6:
+      name: "Вор"
+      price: 50000
+      pay: 3500
+      time: 20
+    r7:
+      name: "Грабитель"
+      price: 120000
+      pay: 6100
+      time: 20
+    r8:
+      name: "Статный"
+      price: 250000
+      pay: 8000
+      time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+          factions:
+            f5:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+    r9:
+      name: "Блатной"
+      price: 500000
+      pay: 10000
+      time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f5:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+    r10:
+      name: "Нарик"
+      price: 750000
+      pay: 12000
+      time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f5:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+    r11:
+      name: "Контрабандист"
+      price: 1000000
+      pay: 15000
+      time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f5:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+    r12:
+      name: "Заведующий мафии"
+      price: 2500000
+      pay: 20000
+      time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f5:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+    r13:
+      name: "Зам глава мафии"
+      price: 4000000
+      pay: 30000
+      time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f5:
+              - r8
+              - r9
+              - r10
+              - r11
+    r14:
+      name: "Глава мафии"
+      price: -1
+      pay: 50000
+      time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f5:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+              - r13
+f6:
+  type: FBI
+  name: "Федеральная Служба Безопасности"
+  ranks:
+    r1:
+      name: "Мл. лейтенант ФСБ"
+      price: 25000
+      pay: 2500
+      time: 20
+      default: true
+    r2:
+      name: "Лейтенант ФСБ"
+      price: 75000
+      pay: 5000
+      time: 20
+    r3:
+      name: "Ст. Лейтенант ФСБ"
+      price: 150000
+      pay: 7500
+      time: 20
+    r4:
+      name: "Капитан ФСБ"
+      price: 350000
+      pay: 9000
+      time: 20
+    r5:
+      name: "Майор ФСБ"
+      price: 650000
+      pay: 11000
+      time: 20
+    r6:
+      name: "Подполковник ФСБ"
+      price: 800000
+      pay: 13000
+      time: 20
+    r7:
+      name: "Полковник ФСБ"
+      price: 1000000
+      pay: 15000
+      time: 20
+    r8:
+      name: "Генерал ФСБ"
+      price: 2500000
+      pay: 20000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+          factions:
+            f6:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+    r9:
+      name: "Зам лидер ФСБ"
+      price: 4000000
+      pay: 30000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f6:
+              - r5
+              - r6
+              - r7
+              - r8
+    r10:
+      name: "Лидер ФСБ"
+      price: -1
+      pay: 50000
+      time: 20
+      special_skills:
+        can_arrest: true
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f6:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+f7:
+  type: POLITICAL
+  name: "Политика"
+  ranks:
+    r1:
+      name: "Чиновник"
+      price: 4000000
+      pay: 30000
+      time: 20
+      default: true
+    r2:
+      name: "Депутат"
+      price: 7500000
+      pay: 50000
+      time: 20
+    r3:
+      name: "Сенатор"
+      price: 10000
+      pay: 60000
+      time: 20
+    r4:
+      name: "Зам мэра"
+      price: 15000000
+      pay: 75000
+      time: 20
+    r5:
+      name: "Мэр"
+      price: -1
+      pay: 100000
+      time: 20
