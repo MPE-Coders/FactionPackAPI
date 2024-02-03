@@ -175,7 +175,7 @@ class FormBox {
                 return;
             }
 
-            $inputText = $data[0];
+            $inputText = $data[1];
 
             Server::getInstance()->broadcastMessage("[News] " . $player->getName() . " > " . $inputText);
         });
