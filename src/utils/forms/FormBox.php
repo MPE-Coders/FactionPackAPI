@@ -138,7 +138,7 @@ class FormBox {
             if($data == 'can_manage'){
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Вы можете управлять.");
                 // TODO: Открыть страницу управления фракцией\фракциями, которые доступны игроку для управления
-                // self::sendManagePage($sender);
+                 self::sendManagePage($sender);
             }
             if($data === 'quit'){
                 $member->unregisterPlayer();
@@ -184,6 +184,55 @@ class FormBox {
         $form->addLabel("Введите новость, пусть она всех шокирует!");
         $form->addInput("Введите текст:");
         $form->sendToPlayer($player);
+    }
+
+    public static function sendManagePage(Player $sender): void
+    {
+        $member = FactionAPI::getPlayer($sender->getName());
+
+        $form = new SimpleForm(function (Player $sender, $data): void {
+            if ($data === null) {
+                $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                return;
+            }
+
+            $selectedOption = $data;
+
+            switch ($selectedOption) {
+                case "promote":
+                    $sender->sendMessage("Повышение");
+                    break;
+
+                case "demote":
+                    $sender->sendMessage("Понижение");
+                    break;
+
+                case "uninv":
+                    $sender->sendMessage("Увольнение");
+                    break;
+
+                case "interdepartmental_management":
+                    $sender->sendMessage("Межвед.упр");
+                    break;
+
+                default:
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Неизвестная опция.");
+                    break;
+            }
+        });
+
+        $form->setTitle(FactionPackAPI::PREFIX);
+        $form->setContent("Управление фракцией: " . $member->getFaction()->getName());
+
+        $form->addButton("Повысить", -1, "", "promote");
+        $form->addButton("Понизить", -1, "", "demote");
+        $form->addButton("Уволить", -1, "", "uninv");
+
+        if ($member->getFaction()->getId() === "f7" && $member->getRank()->getId() >= "r4") {
+            $form->addButton("Межведомственное управление", -1, "", "interdepartmental_management");
+        }
+
+        $sender->sendForm($form);
     }
 
     public static function getAdminBox() : AdminBox
