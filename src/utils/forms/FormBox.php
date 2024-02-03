@@ -181,6 +181,7 @@ class FormBox {
         });
 
         $form->setTitle(FactionPackAPI::PREFIX);
+        $form->addLabel("Введите новость, пусть она всех шокирует!");
         $form->addInput("Введите текст:");
         $form->sendToPlayer($player);
     }
