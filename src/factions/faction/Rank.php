@@ -14,6 +14,7 @@ final class Rank
     private bool $default;
     private bool $can_write;
     private mixed $image;
+    private SpecialSkils $skills;
 
     public function __construct()
     {
@@ -95,5 +96,44 @@ final class Rank
     public function setCanWrite($can_write) : void
     {
         $this->can_write = $can_write;
+    }
+
+    public function setSpecialSkills(mixed $special_skills): void
+    {
+        $skills = new SpecialSkils();
+        foreach ($special_skills as $skill => $options) {
+            if ($skill == 'can_write') {
+                $skills->setCanWrite(true);
+            } else {
+            $skills->setCanWrite(false);
+            }
+            if($skill == 'can_manage') {
+                $manage = new Manage();
+                $manage->setTypes($options['manage_type']);
+                $manage->setFactions($options['factions']);
+                $skills->setCanManage(true);
+
+                $skills->setManage($manage);
+            } else {
+                $skills->setCanManage(false);
+            }
+            if($skill == 'can_health') {
+                $skills->setCanHealth(true);
+            } else {
+                $skills->setCanHealth(false);
+            }
+            if($skill == 'can_arrest'){
+                $skills->setCanArrest(true);
+            } else {
+                $skills->setCanArrest(false);
+            }
+            // TODO: Add special skill for get_free_food and get_free_weapons for ARMY
+        }
+        $this->skills = $skills;
+    }
+
+    public function getSkills() : SpecialSkils
+    {
+        return $this->skills ?? new SpecialSkils();
     }
 }
