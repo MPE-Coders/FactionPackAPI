@@ -57,7 +57,7 @@ class Manager
         return self::$users[$name] ?? false;
     }
 
-    public static function getRank($faction, mixed $rank_id): Rank
+    public static function getRank(Faction $faction, mixed $rank_id): Rank
     {
         return $faction->getRank($rank_id) ?? $faction->getRank(self::DEFAULT_RANK);
     }

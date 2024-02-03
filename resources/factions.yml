@@ -1091,23 +1091,298 @@ f7:
       pay: 30000
       time: 20
       default: true
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f3:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+            f4:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+            f6:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
     r2:
       name: "Депутат"
       price: 7500000
       pay: 50000
       time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f3:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+            f4:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+            f6:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
     r3:
       name: "Сенатор"
       price: 10000
       pay: 60000
       time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f3:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+            f4:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+            f6:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
     r4:
       name: "Зам мэра"
       price: 15000000
       pay: 75000
       time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f3:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+              - r13
+              - r14
+            f4:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+              - r13
+              - r14
+            f6:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+            f7:
+              - r1
     r5:
       name: "Мэр"
       price: -1
       pay: 100000
       time: 20
+      special_skills:
+        can_manage:
+          manage_type:
+            - "up"
+            - "down"
+            - "kick"
+          factions:
+            f1:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+              - r13
+              - r14
+            f2:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+              - r13
+              - r14
+            f3:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+              - r13
+              - r14
+            f4:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+              - r13
+              - r14
+            f5:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+              - r11
+              - r12
+              - r13
+              - r14
+            f6:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
+              - r6
+              - r7
+              - r8
+              - r9
+              - r10
+            f7:
+              - r1
+              - r2
+              - r3
+              - r4
+              - r5
