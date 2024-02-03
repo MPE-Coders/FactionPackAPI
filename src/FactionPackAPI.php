@@ -44,7 +44,7 @@ class FactionPackAPI extends PluginBase{
 
         FactionAPI::registerPlayer("name", "f7", "r4");
         $p = FactionAPI::getPlayer("name");
-        TerminalLogger::debug($p->getRank()->getSkills()->getManage()->getTypes());
+        //TerminalLogger::debug($p->getRank()->getSkills()->getManage()->getTypes());
 //        $p->setRank("r5");
 //        $p->savePlayer();
 //
