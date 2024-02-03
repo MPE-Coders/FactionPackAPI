@@ -74,6 +74,9 @@ final class Faction
             $this->ranks[$rank_id]->setPrice($option['price']);
             $this->ranks[$rank_id]->setPay($option['pay']);
             $this->ranks[$rank_id]->setTime($option['time']);
+            if(isset($option['special_skills'])){
+                $this->ranks[$rank_id]->setSpecialSkills($option['special_skills']);
+            }
 
             if(isset($option['can_write'])){
                 $this->ranks[$rank_id]->setCanWrite($option['can_write']);

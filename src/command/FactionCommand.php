@@ -52,7 +52,7 @@ class FactionCommand extends Command
             if($sender->hasPermission("faction.job.admin")){
                 FormBox::getAdminBox()->sendMainForm($sender);
             } else {
-                FormBox::sendJobQuitPage($sender);
+                FormBox::sendJobMainPage($sender);
             }
         } else {
             if(!empty($args[0]) && $args[0] == 'info'){
