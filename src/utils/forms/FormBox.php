@@ -125,7 +125,7 @@ class FormBox {
             if($data == 'can_write'){
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Вы можете писать новости.");
                 // TODO: Открыть страницу отправки новостей
-                // self::sendNewsPage($sender);
+                self::sendNewsPage($sender);
             }
             if($data == 'can_health'){
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Вы получили аптечку.");
