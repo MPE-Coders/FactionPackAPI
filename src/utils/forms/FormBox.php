@@ -7,11 +7,13 @@ namespace XackiGiFF\FactionPackAPI\utils\forms;
 use ErrorException;
 use jojoe77777\FormAPI\ModalForm;
 use jojoe77777\FormAPI\SimpleForm;
+use jojoe77777\FormAPI\CustomForm;
 use pocketmine\player\Player;
 use XackiGiFF\FactionPackAPI\FactionPackAPI;
 use XackiGiFF\FactionPackAPI\factions\api\FactionAPI;
 use XackiGiFF\FactionPackAPI\factions\faction\Faction;
 use XackiGiFF\TerminalLogger\utils\TerminalLogger;
+use pocketmine\Server;
 
 class FormBox {
 
@@ -24,7 +26,7 @@ class FormBox {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                 return;
             }
-            //var_dump($data);
+            var_dump($data);
             self::sendJobPage($sender, $data);
         });
         $form->setTitle(FactionPackAPI::PREFIX);
@@ -163,6 +165,24 @@ class FormBox {
         $form->addButton("Уволиться", -1, "", "quit");
         $sender->sendForm($form);
         return true;
+    }
+
+    public static function sendNewsPage(Player $player): void
+    {
+        $form = new CustomForm(function (Player $player, $data): void {
+            if ($data === null) {
+                $player->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                return;
+            }
+
+            $inputText = $data[0];
+
+            Server::getInstance()->broadcastMessage("[News] " . $player->getName() . " > " . $inputText);
+        });
+
+        $form->setTitle(FactionPackAPI::PREFIX);
+        $form->addInput("Введите текст:");
+        $form->sendToPlayer($player);
     }
 
     public static function getAdminBox() : AdminBox
