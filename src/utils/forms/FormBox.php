@@ -7,11 +7,13 @@ namespace XackiGiFF\FactionPackAPI\utils\forms;
 use ErrorException;
 use jojoe77777\FormAPI\ModalForm;
 use jojoe77777\FormAPI\SimpleForm;
+use jojoe77777\FormAPI\CustomForm;
 use pocketmine\player\Player;
 use XackiGiFF\FactionPackAPI\FactionPackAPI;
 use XackiGiFF\FactionPackAPI\factions\api\FactionAPI;
 use XackiGiFF\FactionPackAPI\factions\faction\Faction;
 use XackiGiFF\TerminalLogger\utils\TerminalLogger;
+use pocketmine\Server;
 
 class FormBox {
 
@@ -24,7 +26,7 @@ class FormBox {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                 return;
             }
-            //var_dump($data);
+            var_dump($data);
             self::sendJobPage($sender, $data);
         });
         $form->setTitle(FactionPackAPI::PREFIX);
@@ -32,7 +34,7 @@ class FormBox {
 
         $factionList = FactionAPI::getFactionList(Faction::TYPE_ARRAY);
 
-        array_pop($factionList); // Удаляем последний элемент из массива. Последний элемент - это "Без фракции\Без ранга"
+        array_pop($factionList);
         foreach ($factionList as $faction) {
             $form->addButton($faction->getName(), 0, $faction->getImage());
         }
@@ -102,7 +104,7 @@ class FormBox {
             $form->setContent("§eВы хотите вступить в фракцию на работу {$member->getFaction()->getName()}" . PHP_EOL .
                               "§eВаша будущая роль {$member->getRank()->getName()}" . PHP_EOL .
                               "§eВаша зарплата составит: {$member->getRank()->getPrice()}" . PHP_EOL .
-                              "{$skills}");
+                              "$skills"); // убраны фигурные скобки, причина: утверждено phpStorm как не обязательное.
             $form->setButton1("Подтвердить");
             $form->setButton2("Отказаться");
             $sender->sendForm($form);
@@ -123,7 +125,7 @@ class FormBox {
             if($data == 'can_write'){
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Вы можете писать новости.");
                 // TODO: Открыть страницу отправки новостей
-                // self::sendNewsPage($sender);
+                self::sendNewsPage($sender);
             }
             if($data == 'can_health'){
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Вы получили аптечку.");
@@ -136,7 +138,7 @@ class FormBox {
             if($data == 'can_manage'){
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Вы можете управлять.");
                 // TODO: Открыть страницу управления фракцией\фракциями, которые доступны игроку для управления
-                // self::sendManagePage($sender);
+                 self::sendManagePage($sender);
             }
             if($data === 'quit'){
                 $member->unregisterPlayer();
@@ -145,7 +147,7 @@ class FormBox {
         });
         $member = FactionAPI::getPlayer($sender->getName());
         $form->setTitle(FactionPackAPI::PREFIX);
-        $form->setContent("§eВаша работа: {$member->getRank()->getName()}.\n Ваш ранг:{$member->getFaction()->getName()}.");
+        $form->setContent("§eВаш ранг: {$member->getRank()->getName()}.\n Ваша работа:{$member->getFaction()->getName()}.");
 
         if($member->getRank()->getSkills()->getCanWrite()){
             $form->addButton("Написать новость", -1, "", "can_write");
@@ -164,6 +166,183 @@ class FormBox {
         $sender->sendForm($form);
         return true;
     }
+
+    public static function sendNewsPage(Player $player): void
+    {
+        $form = new CustomForm(function (Player $player, $data): void {
+            if ($data === null) {
+                $player->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                return;
+            }
+
+            $inputText = $data[1];
+
+            Server::getInstance()->broadcastMessage("[News] " . $player->getName() . " > " . $inputText);
+        });
+
+        $form->setTitle(FactionPackAPI::PREFIX);
+        $form->addLabel("Введите новость, пусть она всех шокирует!");
+        $form->addInput("Введите текст:");
+        $form->sendToPlayer($player);
+    }
+
+    public static function sendManagePage(Player $sender): void
+    {
+        $member = FactionAPI::getPlayer($sender->getName());
+
+        $form = new SimpleForm(function (Player $sender, $data): void {
+            if ($data === null) {
+                $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                return;
+            }
+
+            $selectedOption = $data;
+
+            switch ($selectedOption) {
+                case "rank_manager":
+                    $sender->sendMessage("Повысить/понизить");
+                    self::sendRankPromotionPage($sender);
+                    break;
+
+                case "un_invite":
+                    $sender->sendMessage("Увольнение");
+                    self::sendUn_invitePage($sender);
+                    break;
+
+                case "interdepartmental_management":
+                    $sender->sendMessage("Межвед.упр");
+                    break;
+
+                default:
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Неизвестная опция.");
+                    break;
+            }
+        });
+
+        $form->setTitle(FactionPackAPI::PREFIX);
+        $form->setContent("Управление фракцией: " . $member->getFaction()->getName());
+
+        $form->addButton("Повысить/понизить", -1, "", "rank_manage");
+        $form->addButton("Уволить", -1, "", "un_invite");
+
+        if ($member->getFaction()->getId() === "f7" && $member->getRank()->getId() >= "r4") {
+            $form->addButton("Межведомственное управление", -1, "", "interdepartmental_management");
+        }
+
+        $sender->sendForm($form);
+    }
+
+    public static function sendRankPromotionPage(Player $sender): void
+    {
+        $member = FactionAPI::getPlayer($sender->getName());
+
+        if ($member !== false && $member->getFaction() !== null) {
+            $factionId = $member->getFaction()->getId();
+            $factionMembers = FactionAPI::getFactionMembers($factionId);
+
+            $form = new SimpleForm(function (Player $sender, $data) use ($factionMembers, $factionId, $member): void {
+                if ($data === null) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                    return;
+                }
+
+                $selectedPlayerIndex = (int)$data;
+                $selectedPlayer = $factionMembers[$selectedPlayerIndex];
+
+                if ($selectedPlayer->getName() === $member->getName()) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете повышать/понижать самого себя.");
+                    return;
+                }
+
+                $rankList = FactionAPI::getRankList($factionId, Faction::TYPE_ARRAY);
+
+
+                $rankForm = new SimpleForm(function (Player $sender, $data) use ($selectedPlayer, $rankList, $member): void {
+                    if ($data === null) {
+                        $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                        return;
+                    }
+
+                    $selectedRankIndex = (int)$data;
+                    $selectedRank = $rankList[$selectedRankIndex];
+
+                    FactionAPI::setRank($selectedPlayer->getName(), $selectedRank->getId());
+
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Игрок {$selectedPlayer->getName()} был повышен/понижен до ранга {$selectedRank->getName()}.");
+                });
+
+                $rankForm->setTitle(FactionPackAPI::PREFIX);
+                $rankForm->setContent("Выберите новый ранг для игрока {$selectedPlayer->getName()}:");
+
+                foreach ($rankList as $rank) {
+                    $rankForm->addButton($rank->getName());
+                }
+
+                $sender->sendForm($rankForm);
+            });
+
+            $form->setTitle(FactionPackAPI::PREFIX);
+            $form->setContent("Выберите игрока для повышения/понижения:");
+
+            foreach ($factionMembers as $factionMember) {
+                $form->addButton($factionMember->getName());
+            }
+
+            $sender->sendForm($form);
+        } else {
+            $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не состоите в фракции или у вас нет ранга.");
+        }
+    }
+
+    public static function sendUn_invitePage(Player $sender): void
+    {
+        $member = FactionAPI::getPlayer($sender->getName());
+
+        if ($member !== false && $member->getFaction() !== null) {
+            $factionId = $member->getFaction()->getId();
+            $factionMembers = FactionAPI::getFactionMembers($factionId);
+
+            $form = new SimpleForm(function (Player $sender, $data) use ($factionMembers, $factionId, $member): void {
+                if ($data === null) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                    return;
+                }
+
+                $selectedPlayerIndex = (int)$data;
+                $selectedPlayer = $factionMembers[$selectedPlayerIndex];
+
+                if ($selectedPlayer->getName() === $member->getName()) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете увольнять самого себя.");
+                    return;
+                }
+
+                $senderRank = FactionAPI::getRank($member->getName(), null);
+                $selectedPlayerRank = FactionAPI::getRank($selectedPlayer->getName(), null);
+
+                if ($selectedPlayerRank >= $senderRank) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете увольнять игроков с рангом выше вас.");
+                    return;
+                }
+
+                FactionAPI::setRank($selectedPlayer->getName(), null);
+                FactionAPI::setFaction($selectedPlayer->getName(), null);
+
+                $sender->sendMessage(FactionPackAPI::PREFIX . "Игрок {$selectedPlayer->getName()} был уволен из фракции.");
+            });
+
+            $form->setTitle(FactionPackAPI::PREFIX);
+            $form->setContent("Выберите игрока для увольнения из фракции:");
+
+            foreach ($factionMembers as $factionMember) {
+                $form->addButton($factionMember->getName());
+            }
+
+            $sender->sendForm($form);
+        } else {
+            $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не состоите в фракции или у вас нет ранга.");
+        }
+    }
+
 
     public static function getAdminBox() : AdminBox
     {

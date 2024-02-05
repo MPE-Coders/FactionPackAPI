@@ -23,8 +23,6 @@ class FactionPackAPI extends PluginBase{
      */
     public function onEnable(): void
     {
-        $this->saveResource("factions.yml");
-
         self::$instance = $this;
         /* Инициализация дебагера */
         new TerminalLogger("MSK");
@@ -42,9 +40,9 @@ class FactionPackAPI extends PluginBase{
 
         /* DEBUG BLOCK */
 
-        FactionAPI::registerPlayer("name", "f7", "r4");
-        $p = FactionAPI::getPlayer("name");
-        TerminalLogger::debug($p->getRank()->getSkills()->getManage()->getTypes());
+//        FactionAPI::registerPlayer("name", "f3", "r1");
+        $p = FactionAPI::getPlayer("namename");
+        //var_dump($p);
 //        $p->setRank("r5");
 //        $p->savePlayer();
 //
