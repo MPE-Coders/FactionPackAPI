@@ -34,7 +34,7 @@ class FormBox {
 
         $factionList = FactionAPI::getFactionList(Faction::TYPE_ARRAY);
 
-        array_pop($factionList); // Удаляем последний элемент из массива. Последний элемент - это "Без фракции\Без ранга"
+        array_pop($factionList);
         foreach ($factionList as $faction) {
             $form->addButton($faction->getName(), 0, $faction->getImage());
         }
@@ -206,6 +206,7 @@ class FormBox {
 
                 case "uninv":
                     $sender->sendMessage("Увольнение");
+                    self::sendUninvitePage($sender);
                     break;
 
                 case "interdepartmental_management":
@@ -235,7 +236,6 @@ class FormBox {
     {
         $member = FactionAPI::getPlayer($sender->getName());
 
-        // Проверяем, есть ли у игрока фракция и ранг
         if ($member !== false && $member->getFaction() !== null) {
             $factionId = $member->getFaction()->getId();
             $factionMembers = FactionAPI::getFactionMembers($factionId);
@@ -246,7 +246,6 @@ class FormBox {
                     return;
                 }
 
-                // Обрабатываем выбор игрока
                 $selectedPlayerIndex = (int)$data;
                 $selectedPlayer = $factionMembers[$selectedPlayerIndex];
 
@@ -254,21 +253,19 @@ class FormBox {
                     $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете повышать/понижать самого себя.");
                     return;
                 }
-                // Получаем список рангов для повышения/понижения
+
                 $rankList = FactionAPI::getRankList($factionId, Faction::TYPE_ARRAY);
 
-                // Создаем новую форму для выбора нового ранга
+
                 $rankForm = new SimpleForm(function (Player $sender, $data) use ($selectedPlayer, $rankList, $member): void {
                     if ($data === null) {
                         $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                         return;
                     }
 
-                    // Обрабатываем выбор нового ранга
                     $selectedRankIndex = (int)$data;
                     $selectedRank = $rankList[$selectedRankIndex];
 
-                    // Устанавливаем новый ранг для выбранного игрока
                     FactionAPI::setRank($selectedPlayer->getName(), $selectedRank->getId());
 
                     $sender->sendMessage(FactionPackAPI::PREFIX . "Игрок {$selectedPlayer->getName()} был повышен/понижен до ранга {$selectedRank->getName()}.");
@@ -297,6 +294,54 @@ class FormBox {
         }
     }
 
+    public static function sendUninvitePage(Player $sender): void
+    {
+        $member = FactionAPI::getPlayer($sender->getName());
+
+        if ($member !== false && $member->getFaction() !== null) {
+            $factionId = $member->getFaction()->getId();
+            $factionMembers = FactionAPI::getFactionMembers($factionId);
+
+            $form = new SimpleForm(function (Player $sender, $data) use ($factionMembers, $factionId, $member): void {
+                if ($data === null) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                    return;
+                }
+
+                $selectedPlayerIndex = (int)$data;
+                $selectedPlayer = $factionMembers[$selectedPlayerIndex];
+
+                if ($selectedPlayer->getName() === $member->getName()) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете увольнять самого себя.");
+                    return;
+                }
+
+                $senderRank = FactionAPI::getRank($member->getName(), null);
+                $selectedPlayerRank = FactionAPI::getRank($selectedPlayer->getName(), null);
+
+                if ($selectedPlayerRank >= $senderRank) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете увольнять игроков с рангом выше вас.");
+                    return;
+                }
+
+                FactionAPI::setRank($selectedPlayer->getName(), null);
+                FactionAPI::setFaction($selectedPlayer->getName(), null);
+
+                $sender->sendMessage(FactionPackAPI::PREFIX . "Игрок {$selectedPlayer->getName()} был уволен из фракции.");
+            });
+
+            $form->setTitle(FactionPackAPI::PREFIX);
+            $form->setContent("Выберите игрока для увольнения из фракции:");
+
+            foreach ($factionMembers as $factionMember) {
+                $form->addButton($factionMember->getName());
+            }
+
+            $sender->sendForm($form);
+        } else {
+            $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не состоите в фракции или у вас нет ранга.");
+        }
+    }
 
 
     public static function getAdminBox() : AdminBox
