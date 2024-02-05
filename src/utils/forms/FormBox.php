@@ -240,7 +240,7 @@ class FormBox {
             $factionId = $member->getFaction()->getId();
             $factionMembers = FactionAPI::getFactionMembers($factionId);
 
-            $form = new SimpleForm(function (Player $sender, $data) use ($factionMembers, $factionId): void {
+            $form = new SimpleForm(function (Player $sender, $data) use ($factionMembers, $factionId, $member): void {
                 if ($data === null) {
                     $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                     return;
@@ -258,7 +258,7 @@ class FormBox {
                 $rankList = FactionAPI::getRankList($factionId, Faction::TYPE_ARRAY);
 
                 // Создаем новую форму для выбора нового ранга
-                $rankForm = new SimpleForm(function (Player $sender, $data) use ($selectedPlayer, $rankList): void {
+                $rankForm = new SimpleForm(function (Player $sender, $data) use ($selectedPlayer, $rankList, $member): void {
                     if ($data === null) {
                         $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                         return;
@@ -277,7 +277,7 @@ class FormBox {
                 $rankForm->setTitle(FactionPackAPI::PREFIX);
                 $rankForm->setContent("Выберите новый ранг для игрока {$selectedPlayer->getName()}:");
 
-                foreach ($rankList as $index => $rank) {
+                foreach ($rankList as $rank) {
                     $rankForm->addButton($rank->getName());
                 }
 
@@ -287,7 +287,7 @@ class FormBox {
             $form->setTitle(FactionPackAPI::PREFIX);
             $form->setContent("Выберите игрока для повышения/понижения:");
 
-            foreach ($factionMembers as $index => $factionMember) {
+            foreach ($factionMembers as $factionMember) {
                 $form->addButton($factionMember->getName());
             }
 
