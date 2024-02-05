@@ -104,7 +104,7 @@ class FormBox {
             $form->setContent("§eВы хотите вступить в фракцию на работу {$member->getFaction()->getName()}" . PHP_EOL .
                               "§eВаша будущая роль {$member->getRank()->getName()}" . PHP_EOL .
                               "§eВаша зарплата составит: {$member->getRank()->getPrice()}" . PHP_EOL .
-                              "{$skills}");
+                              "$skills"); // убраны фигурные скобки, причина: утверждено phpStorm как не обязательное.
             $form->setButton1("Подтвердить");
             $form->setButton2("Отказаться");
             $sender->sendForm($form);
@@ -199,14 +199,14 @@ class FormBox {
             $selectedOption = $data;
 
             switch ($selectedOption) {
-                case "rankprom":
+                case "rank_manager":
                     $sender->sendMessage("Повысить/понизить");
                     self::sendRankPromotionPage($sender);
                     break;
 
-                case "uninv":
+                case "un_invite":
                     $sender->sendMessage("Увольнение");
-                    self::sendUninvitePage($sender);
+                    self::sendUn_invitePage($sender);
                     break;
 
                 case "interdepartmental_management":
@@ -222,8 +222,8 @@ class FormBox {
         $form->setTitle(FactionPackAPI::PREFIX);
         $form->setContent("Управление фракцией: " . $member->getFaction()->getName());
 
-        $form->addButton("Повысить/понизить", -1, "", "rankprom");
-        $form->addButton("Уволить", -1, "", "uninv");
+        $form->addButton("Повысить/понизить", -1, "", "rank_manage");
+        $form->addButton("Уволить", -1, "", "un_invite");
 
         if ($member->getFaction()->getId() === "f7" && $member->getRank()->getId() >= "r4") {
             $form->addButton("Межведомственное управление", -1, "", "interdepartmental_management");
@@ -294,7 +294,7 @@ class FormBox {
         }
     }
 
-    public static function sendUninvitePage(Player $sender): void
+    public static function sendUn_invitePage(Player $sender): void
     {
         $member = FactionAPI::getPlayer($sender->getName());
 
