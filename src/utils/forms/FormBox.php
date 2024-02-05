@@ -147,7 +147,7 @@ class FormBox {
         });
         $member = FactionAPI::getPlayer($sender->getName());
         $form->setTitle(FactionPackAPI::PREFIX);
-        $form->setContent("§eВаша работа: {$member->getRank()->getName()}.\n Ваш ранг:{$member->getFaction()->getName()}.");
+        $form->setContent("§eВаш ранг: {$member->getRank()->getName()}.\n Ваша работа:{$member->getFaction()->getName()}.");
 
         if($member->getRank()->getSkills()->getCanWrite()){
             $form->addButton("Написать новость", -1, "", "can_write");
@@ -235,25 +235,53 @@ class FormBox {
     {
         $member = FactionAPI::getPlayer($sender->getName());
 
-        // Проверяем, чтобы у игрока была фракция и ранг
+        // Проверяем, есть ли у игрока фракция и ранг
         if ($member !== false && $member->getFaction() !== null) {
             $factionId = $member->getFaction()->getId();
             $factionMembers = FactionAPI::getFactionMembers($factionId);
 
-            $form = new SimpleForm(function (Player $sender, $data) use ($factionMembers): void {
+            $form = new SimpleForm(function (Player $sender, $data) use ($factionMembers, $factionId): void {
                 if ($data === null) {
                     $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                     return;
                 }
 
-                // Обработка выбора игрока
+                // Обрабатываем выбор игрока
                 $selectedPlayerIndex = (int)$data;
                 $selectedPlayer = $factionMembers[$selectedPlayerIndex];
 
-                // Здесь вы можете реализовать логику повышения/понижения ранга выбранного игрока
-                // Например, вызов метода FactionAPI::promotePlayer($selectedPlayer) или что-то подобное
+                if ($selectedPlayer->getName() === $member->getName()) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете повышать/понижать самого себя.");
+                    return;
+                }
+                // Получаем список рангов для повышения/понижения
+                $rankList = FactionAPI::getRankList($factionId, Faction::TYPE_ARRAY);
 
-                $sender->sendMessage(FactionPackAPI::PREFIX . "Игрок {$selectedPlayer->getName()} был выбран для повышения/понижения.");
+                // Создаем новую форму для выбора нового ранга
+                $rankForm = new SimpleForm(function (Player $sender, $data) use ($selectedPlayer, $rankList): void {
+                    if ($data === null) {
+                        $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                        return;
+                    }
+
+                    // Обрабатываем выбор нового ранга
+                    $selectedRankIndex = (int)$data;
+                    $selectedRank = $rankList[$selectedRankIndex];
+
+                    // Устанавливаем новый ранг для выбранного игрока
+                    FactionAPI::setRank($selectedPlayer->getName(), $selectedRank->getId());
+
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Игрок {$selectedPlayer->getName()} был повышен/понижен до ранга {$selectedRank->getName()}.");
+                });
+
+                $rankForm->setTitle(FactionPackAPI::PREFIX);
+                $rankForm->setContent("Выберите новый ранг для игрока {$selectedPlayer->getName()}:");
+
+                foreach ($rankList as $index => $rank) {
+                    $rankForm->addButton($rank->getName());
+                }
+
+                $sender->sendForm($rankForm);
             });
 
             $form->setTitle(FactionPackAPI::PREFIX);
@@ -268,6 +296,7 @@ class FormBox {
             $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не состоите в фракции или у вас нет ранга.");
         }
     }
+
 
 
     public static function getAdminBox() : AdminBox

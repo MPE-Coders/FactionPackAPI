@@ -63,7 +63,7 @@ class FactionAPI
     }
 
     public static function setRank($name, $rank_id) : void {
-        self::getPlayer($name)->setFaction($rank_id);
+        self::getPlayer($name)->setRank($rank_id);
     }
 
     /**
