@@ -222,8 +222,12 @@ class FormBox {
         $form->setTitle(FactionPackAPI::PREFIX);
         $form->setContent("Управление фракцией: " . $member->getFaction()->getName());
 
-        $form->addButton("Повысить/понизить", -1, "", "rank_manage");
-        $form->addButton("Уволить", -1, "", "un_invite");
+        if($member->getRank()->getSkills()->getManage()->getCanUp() || $member->getRank()->getSkills()->getManage()->getCanDown()) {
+            $form->addButton("Повысить/понизить", -1, "", "rank_manager");
+        }
+        if($member->getRank()->getSkills()->getManage()->getCanKick()){
+            $form->addButton("Уволить", -1, "", "un_invite");
+        }
 
         if ($member->getFaction()->getId() === "f7" && $member->getRank()->getId() >= "r4") {
             $form->addButton("Межведомственное управление", -1, "", "interdepartmental_management");
@@ -231,7 +235,6 @@ class FormBox {
 
         $sender->sendForm($form);
     }
-
     public static function sendRankPromotionPage(Player $sender): void
     {
         $member = FactionAPI::getPlayer($sender->getName());

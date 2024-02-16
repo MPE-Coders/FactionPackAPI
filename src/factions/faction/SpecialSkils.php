@@ -68,4 +68,5 @@ class SpecialSkils
     {
         return $this->can_arrest;
     }
+
 }
