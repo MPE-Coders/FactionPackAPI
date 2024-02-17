@@ -13,6 +13,7 @@ use XackiGiFF\FactionPackAPI\FactionPackAPI;
 use XackiGiFF\FactionPackAPI\factions\api\FactionAPI;
 use XackiGiFF\FactionPackAPI\factions\faction\Faction;
 use XackiGiFF\TerminalLogger\utils\TerminalLogger;
+use pocketmine\item\VanillaItems;
 use pocketmine\Server;
 
 class FormBox {
@@ -113,7 +114,6 @@ class FormBox {
         }
         return true;
     }
-
     public static function sendJobMainPage($sender) : bool
     {
         $form = new SimpleForm(function (Player $sender, $data) : void {
@@ -123,20 +123,18 @@ class FormBox {
             }
             $member = FactionAPI::getPlayer($sender->getName());
             if($data == 'can_write'){
-                $sender->sendMessage(FactionPackAPI::PREFIX . "Вы можете писать новости.");
                 // TODO: Открыть страницу отправки новостей
                 self::sendNewsPage($sender);
             }
             if($data == 'can_health'){
-                $sender->sendMessage(FactionPackAPI::PREFIX . "Вы получили аптечку.");
                 // TODO: Выдать игроку аптечку
+                self::sendMed($sender);
             }
             if($data == 'can_arrest'){
-                $sender->sendMessage(FactionPackAPI::PREFIX . "Вы получили наручники.");
                 // TODO: Выдать игроку наручники
+                self::sendCuff($sender);
             }
             if($data == 'can_manage'){
-                $sender->sendMessage(FactionPackAPI::PREFIX . "Вы можете управлять.");
                 // TODO: Открыть страницу управления фракцией\фракциями, которые доступны игроку для управления
                  self::sendManagePage($sender);
             }
@@ -165,7 +163,6 @@ class FormBox {
         $sender->sendForm($form);
         return true;
     }
-
     public static function sendNewsPage(Player $player): void
     {
         $form = new CustomForm(function (Player $player, $data): void {
@@ -184,7 +181,6 @@ class FormBox {
         $form->addInput("Введите текст:");
         $form->sendToPlayer($player);
     }
-
     public static function sendManagePage(Player $sender): void
     {
         $member = FactionAPI::getPlayer($sender->getName());
@@ -302,8 +298,6 @@ class FormBox {
             $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не состоите в фракции или у вас нет ранга.");
         }
     }
-
-
     public static function sendUn_invitePage(Player $sender): void
     {
         $member = FactionAPI::getPlayer($sender->getName());
@@ -352,7 +346,17 @@ class FormBox {
             $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не состоите в фракции или у вас нет ранга.");
         }
     }
+    public static function sendCuff(Player $player): void {
+        $player->sendMessage("Вы получили полицейские наручники, не злоупотребляйте ими!");
+        $inventory = $player->getInventory();
+        $inventory->addItem(VanillaItems::STICK()->setCount(1)->setCustomName("§eПолицейские наручники\nВладелец: {$player->getName()}"));
+    }
 
+    public static function sendMed(Player $player): void {
+        $player->sendMessage("Вы получили медицинскую аптечку!");
+        $inventory = $player->getInventory();
+        $inventory->addItem(VanillaItems::APPLE()->setCount(1)->setCustomName("§eМедикаменты\nВладелец: {$player->getName()}"));
+    }
 
     public static function getAdminBox() : AdminBox
     {
