@@ -147,7 +147,7 @@ class FormBox {
         });
         $member = FactionAPI::getPlayer($sender->getName());
         $form->setTitle(FactionPackAPI::PREFIX);
-        $form->setContent("§eВаш ранг: {$member->getRank()->getName()}.\n Ваша работа:{$member->getFaction()->getName()}.");
+        $form->setContent("§eВаш ранг: {$member->getRank()->getName()}.\n Ваша работа: {$member->getFaction()->getName()}.");
 
         if($member->getRank()->getSkills()->getCanWrite()){
             $form->addButton("Написать новость", -1, "", "can_write");
@@ -161,7 +161,6 @@ class FormBox {
         if($member->getRank()->getSkills()->getCanManage()){
             $form->addButton("Управлять", -1, "", "can_manage");
         }
-
         $form->addButton("Уволиться", -1, "", "quit");
         $sender->sendForm($form);
         return true;
@@ -284,7 +283,7 @@ class FormBox {
                     }
                 });
                 $rankForm->setTitle(FactionPackAPI::PREFIX);
-                $rankForm->setContent("Выберите новый ранг для игрока {$selectedPlayer->getName()}:");
+                $rankForm->setContent("Текущий ранг игрока {$selectedPlayer->getName()}: {$selectedPlayer->getRank()->getName()}\nВыберите дейсвтие:");
                 if($member->getRank()->getSkills()->getManage()->getCanUp()){
                     $rankForm->addButton("Повысить");
                 }
