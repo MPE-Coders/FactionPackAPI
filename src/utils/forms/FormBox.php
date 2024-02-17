@@ -238,75 +238,72 @@ class FormBox {
     public static function sendRankPromotionPage(Player $sender): void
     {
         $member = FactionAPI::getPlayer($sender->getName());
-
         if ($member !== false && $member->getFaction() !== null) {
             $factionId = $member->getFaction()->getId();
             $factionMembers = FactionAPI::getFactionMembers($factionId);
-
             $form = new SimpleForm(function (Player $sender, $data) use ($factionMembers, $factionId, $member): void {
                 if ($data === null) {
                     $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                     return;
                 }
-
                 $selectedPlayerIndex = (int)$data;
                 $selectedPlayer = $factionMembers[$selectedPlayerIndex];
-
-/*                if ($selectedPlayer->getName() === $member->getName()) {
+                if ($selectedPlayer->getName() === $member->getName()) {
                     $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете повышать/понижать самого себя.");
                     return;
-                }*/
-
-                $rankList = FactionAPI::getRankList($factionId, Faction::TYPE_ARRAY);
-
-                $rankForm = new SimpleForm(function (Player $sender, $data) use ($selectedPlayer, $rankList, $member): void {
+                }
+                if ($member->getRank()->getId() >= $selectedPlayer->getRank()->getId()) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете повышать/понижать игрока с рангом выше или равным к вашему.");
+                    return;
+                }
+                $rankForm = new SimpleForm(function (Player $sender, $data) use ($selectedPlayer, $member, $factionId): void {
+                    $currentRank = $selectedPlayer->getRank()->getId();
                     if ($data === null) {
                         $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                         return;
                     }
-
-                    $selectedRankIndex = (int)$data;
-                    $selectedRank = $rankList[$selectedRankIndex];
-
-                    $action = $selectedRank->getName() === "Повысить игрока" ? "повышен" : "понижен";
-
-                    $currentRankIndex = array_search($selectedPlayer->getRank()->getId(), array_column($rankList, 'id'));
-
-                    $newRankIndex = $currentRankIndex;
-                    if ($action === "повышен" && $currentRankIndex < count($rankList) - 1) {
-                        $newRankIndex = $currentRankIndex + 1;
-                    } elseif ($action === "понижен" && $currentRankIndex > 0) {
-                        $newRankIndex = $currentRankIndex - 1;
+                    if ($data === 0) {
+                        $newRankUP = ++$currentRank;
+                        if ($newRankUP !== null) {
+                        $selectedPlayer->setFaction($factionId);
+                        $selectedPlayer->setRank($newRankUP);
+                        $sender->sendMessage("Игрок повышен до {$selectedPlayer->getRank()->getName()}");
+                    } else {
+                            $sender->sendMessage("Игрок уже достиг максимального ранга.");
+                        }
                     }
-
-                    $newRank = $rankList[$newRankIndex];
-
-                    FactionAPI::setRank($selectedPlayer->getName(), $newRank->getId());
-
-                    $sender->sendMessage(FactionPackAPI::PREFIX . "Игрок {$selectedPlayer->getName()} был $action до ранга {$newRank->getName()}.");
+                    if ($data === 1) {
+                        $newRankDW = --$currentRank; // Тут имеется проблема. Выдается текущий ранг игрока, а не ниже!
+                        if ($newRankDW !== null) {
+                        $selectedPlayer->setFaction($factionId);
+                        $selectedPlayer->setRank($newRankDW);
+                        $sender->sendMessage("Игрок понижен до {$selectedPlayer->getRank()->getName()}");
+                    } else {
+                            $sender->sendMessage("Игрок уже имеет самый маленький ранг.");
+                        }
+                    }
                 });
-
                 $rankForm->setTitle(FactionPackAPI::PREFIX);
-                $rankForm->setContent("Выберите действие для игрока {$selectedPlayer->getName()}:");
-
-                $rankForm->addButton("Повысить игрока");
-                $rankForm->addButton("Понижить игрока");
-
+                $rankForm->setContent("Выберите новый ранг для игрока {$selectedPlayer->getName()}:");
+                if($member->getRank()->getSkills()->getManage()->getCanUp()){
+                    $rankForm->addButton("Повысить");
+                }
+                if($member->getRank()->getSkills()->getManage()->getCanDown()) {
+                    $rankForm->addButton("Понизить");
+                }
                 $sender->sendForm($rankForm);
             });
-
             $form->setTitle(FactionPackAPI::PREFIX);
             $form->setContent("Выберите игрока для повышения/понижения:");
-
             foreach ($factionMembers as $factionMember) {
                 $form->addButton($factionMember->getName());
             }
-
             $sender->sendForm($form);
         } else {
             $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не состоите в фракции или у вас нет ранга.");
         }
     }
+
 
     public static function sendUn_invitePage(Player $sender): void
     {
