@@ -252,13 +252,12 @@ class FormBox {
                 $selectedPlayerIndex = (int)$data;
                 $selectedPlayer = $factionMembers[$selectedPlayerIndex];
 
-                if ($selectedPlayer->getName() === $member->getName()) {
+/*                if ($selectedPlayer->getName() === $member->getName()) {
                     $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете повышать/понижать самого себя.");
                     return;
-                }
+                }*/
 
                 $rankList = FactionAPI::getRankList($factionId, Faction::TYPE_ARRAY);
-
 
                 $rankForm = new SimpleForm(function (Player $sender, $data) use ($selectedPlayer, $rankList, $member): void {
                     if ($data === null) {
@@ -269,17 +268,29 @@ class FormBox {
                     $selectedRankIndex = (int)$data;
                     $selectedRank = $rankList[$selectedRankIndex];
 
-                    FactionAPI::setRank($selectedPlayer->getName(), $selectedRank->getId());
+                    $action = $selectedRank->getName() === "Повысить игрока" ? "повышен" : "понижен";
 
-                    $sender->sendMessage(FactionPackAPI::PREFIX . "Игрок {$selectedPlayer->getName()} был повышен/понижен до ранга {$selectedRank->getName()}.");
+                    $currentRankIndex = array_search($selectedPlayer->getRank()->getId(), array_column($rankList, 'id'));
+
+                    $newRankIndex = $currentRankIndex;
+                    if ($action === "повышен" && $currentRankIndex < count($rankList) - 1) {
+                        $newRankIndex = $currentRankIndex + 1;
+                    } elseif ($action === "понижен" && $currentRankIndex > 0) {
+                        $newRankIndex = $currentRankIndex - 1;
+                    }
+
+                    $newRank = $rankList[$newRankIndex];
+
+                    FactionAPI::setRank($selectedPlayer->getName(), $newRank->getId());
+
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Игрок {$selectedPlayer->getName()} был $action до ранга {$newRank->getName()}.");
                 });
 
                 $rankForm->setTitle(FactionPackAPI::PREFIX);
-                $rankForm->setContent("Выберите новый ранг для игрока {$selectedPlayer->getName()}:");
+                $rankForm->setContent("Выберите действие для игрока {$selectedPlayer->getName()}:");
 
-                foreach ($rankList as $rank) {
-                    $rankForm->addButton($rank->getName());
-                }
+                $rankForm->addButton("Повысить игрока");
+                $rankForm->addButton("Понижить игрока");
 
                 $sender->sendForm($rankForm);
             });
