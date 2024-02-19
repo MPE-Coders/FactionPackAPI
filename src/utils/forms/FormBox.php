@@ -206,6 +206,7 @@ class FormBox {
 
                 case "interdepartmental_management":
                     $sender->sendMessage("Межвед.упр");
+                    self::sendIntDep_manage($sender);
                     break;
 
                 default:
@@ -224,7 +225,7 @@ class FormBox {
             $form->addButton("Уволить", -1, "", "un_invite");
         }
 
-        if ($member->getFaction()->getId() === "f7" && $member->getRank()->getId() >= "r4") {
+        if ($member->getFaction()->getId() === "f7") {
             $form->addButton("Межведомственное управление", -1, "", "interdepartmental_management");
         }
 
@@ -346,16 +347,70 @@ class FormBox {
             $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не состоите в фракции или у вас нет ранга.");
         }
     }
+
+    public static function sendIntDep_manage(Player $sender): void
+    {
+        $member = FactionAPI::getPlayer($sender->getName());
+
+        if ($member !== false && $member->getFaction() !== null) {
+            $factionId = $member->getFaction()->getId();
+            $factionMembers = FactionAPI::getFactionMembers($factionId);
+
+            $form = new SimpleForm(function (Player $sender, $data) use ($factionMembers, $factionId, $member): void {
+                if ($data === null) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                    return;
+                }
+
+                $selectedPlayerIndex = (int)$data;
+                $selectedPlayer = $factionMembers[$selectedPlayerIndex];
+
+                if ($selectedPlayer->getName() === $member->getName()) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете увольнять самого себя.");
+                    return;
+                }
+
+                $senderRank = FactionAPI::getRank($member->getName(), null);
+                $selectedPlayerRank = FactionAPI::getRank($selectedPlayer->getName(), null);
+
+                if ($selectedPlayerRank >= $senderRank) {
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не можете увольнять игроков с рангом выше вас.");
+                    return;
+                }
+
+                FactionAPI::setRank($selectedPlayer->getName(), null);
+                FactionAPI::setFaction($selectedPlayer->getName(), null);
+
+                $sender->sendMessage(FactionPackAPI::PREFIX . "Игрок {$selectedPlayer->getName()} был уволен из фракции.");
+            });
+
+            $form->setTitle(FactionPackAPI::PREFIX);
+            $form->setContent("Выберите игрока для увольнения из фракции:");
+
+            foreach ($factionMembers as $factionMember) {
+                // Проверяем, что фракция игрока равна одной из указанных
+                if (in_array($factionMember->getFaction()->getId(), ['f3', 'f4', 'f6'])) {
+                    $form->addButton($factionMember->getName());
+                }
+            }
+
+            $sender->sendForm($form);
+        } else {
+            $sender->sendMessage(FactionPackAPI::PREFIX . "Вы не состоите в фракции или у вас нет ранга.");
+        }
+    }
+
+
     public static function sendCuff(Player $player): void {
         $player->sendMessage("Вы получили полицейские наручники, не злоупотребляйте ими!");
         $inventory = $player->getInventory();
-        $inventory->addItem(VanillaItems::STICK()->setCount(1)->setCustomName("§eПолицейские наручники\nВладелец: {$player->getName()}"));
+        $inventory->addItem(VanillaItems::IRON_NUGGET()->setCount(1)->setCustomName("§eПолицейские наручники"));
     }
 
     public static function sendMed(Player $player): void {
         $player->sendMessage("Вы получили медицинскую аптечку!");
         $inventory = $player->getInventory();
-        $inventory->addItem(VanillaItems::APPLE()->setCount(1)->setCustomName("§eМедикаменты\nВладелец: {$player->getName()}"));
+        $inventory->addItem(VanillaItems::GOLD_NUGGET()->setCount(1)->setCustomName("§eМедикаменты"));
     }
 
     public static function getAdminBox() : AdminBox
