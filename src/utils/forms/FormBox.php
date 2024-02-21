@@ -97,6 +97,9 @@ class FormBox {
             if($member->getRank()->getSkills()->getCanArrest()){
                 $skills .= "- Арестовывать игроков наручниками" . PHP_EOL;
             }
+            if($member->getRank()->getSkills()->getCanAmmun()){
+                $skills .= "- Получить патроны" . PHP_EOL;
+            }
 
             if($skills !== ''){
                 $skills = "§eВам будет доступно: " . PHP_EOL . $skills;
@@ -134,9 +137,13 @@ class FormBox {
                 // TODO: Выдать игроку наручники
                 self::sendCuff($sender);
             }
+            if($data == 'can_ammun'){
+                // TODO: Выдать игроку патроны
+                self::sendAmmun($sender);
+            }
             if($data == 'can_manage'){
                 // TODO: Открыть страницу управления фракцией\фракциями, которые доступны игроку для управления
-                 self::sendManagePage($sender);
+                self::sendManagePage($sender);
             }
             if($data === 'quit'){
                 $member->unregisterPlayer();
@@ -155,6 +162,9 @@ class FormBox {
         }
         if($member->getRank()->getSkills()->getCanArrest()){
             $form->addButton("Получить наручники для ареста", -1, "", "can_arrest");
+        }
+        if($member->getRank()->getSkills()->getCanAmmun()){
+            $form->addButton("Получить патроны", -1, "", "can_ammun");
         }
         if($member->getRank()->getSkills()->getCanManage()){
             $form->addButton("Управлять", -1, "", "can_manage");
@@ -411,6 +421,12 @@ class FormBox {
         $player->sendMessage("Вы получили медицинскую аптечку!");
         $inventory = $player->getInventory();
         $inventory->addItem(VanillaItems::GOLD_NUGGET()->setCount(1)->setCustomName("§eМедикаменты"));
+    }
+
+    public static function sendAmmun(Player $player): void {
+        $player->sendMessage("Вы получили патроны для оружия!");
+        $inventory = $player->getInventory();
+        $inventory->addItem(VanillaItems::WHEAT_SEEDS()->setCount(1)->setCustomName("§eПатроны"));
     }
 
     public static function getAdminBox() : AdminBox

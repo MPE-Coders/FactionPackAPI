@@ -10,6 +10,7 @@ class SpecialSkils
     private Manage $manage;
     private bool $can_health;
     private bool $can_arrest;
+    private bool $can_ammun;
 
     public function __construct()
     {
@@ -17,6 +18,7 @@ class SpecialSkils
         $this->can_manage = false;
         $this->can_health = false;
         $this->can_arrest = false;
+        $this->can_ammun = false;
     }
 
     public function setCanWrite(bool $status): void
@@ -44,6 +46,11 @@ class SpecialSkils
         $this->can_arrest = $status;
     }
 
+    public function setCanAmmun(bool $status): void
+    {
+        $this->can_ammun = $status;
+    }
+
     public function getCanWrite() : bool
     {
         return $this->can_write;
@@ -67,6 +74,11 @@ class SpecialSkils
     public function getCanArrest(): bool
     {
         return $this->can_arrest;
+    }
+
+    public function getCanAmmun(): bool
+    {
+        return $this->can_ammun;
     }
 
 }
