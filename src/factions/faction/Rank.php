@@ -127,7 +127,11 @@ final class Rank
             } else {
                 $skills->setCanArrest(false);
             }
-            // TODO: Add special skill for get_free_food and get_free_weapons for ARMY
+            if($skill == 'can_ammun'){
+                $skills->setCanAmmun(true);
+            } else {
+                $skills->setCanAmmun(false);
+            }
         }
         $this->skills = $skills;
     }

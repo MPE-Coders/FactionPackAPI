@@ -63,7 +63,7 @@ class FactionAPI
     }
 
     public static function setRank($name, $rank_id) : void {
-        self::getPlayer($name)->setFaction($rank_id);
+        self::getPlayer($name)->setRank($rank_id);
     }
 
     /**
@@ -72,5 +72,29 @@ class FactionAPI
     public static function savePlayer($name) : void {
         self::getPlayer($name)->savePlayer();
     }
+
+    /**
+     * Получить список участников фракции по ид фракции.
+     *
+     * @param string $factionId Идентификатор фракции.
+     * @return CustomPlayer[]|array Список участников фракции или пустой массив, если фракция не найдена.
+     */
+    public static function getFactionMembers($factionId): array
+    {
+        $faction = Manager::getFaction($factionId);
+
+        if ($faction !== null) {
+            $members = [];
+            foreach (self::getPlayers() as $player) {
+                if ($player->getFaction()->getId() === $factionId) {
+                    $members[] = $player;
+                }
+            }
+            return $members;
+        }
+
+        return [];
+    }
+
 
 }
