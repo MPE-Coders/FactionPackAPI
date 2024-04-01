@@ -431,6 +431,7 @@ f3:
       time: 20
       special_skills:
         can_arrest: true
+        can_ammun: true
     r7:
       name: "Мл. Лейтенант"
       price: 120000
@@ -438,6 +439,7 @@ f3:
       time: 20
       special_skills:
         can_arrest: true
+        can_ammun: true
     r8:
       name: "Лейтенант"
       price: 250000
@@ -445,6 +447,7 @@ f3:
       time: 20
       special_skills:
         can_arrest: true
+        can_ammun: true
         can_manage:
           manage_type:
             - "up"
@@ -464,6 +467,7 @@ f3:
       time: 20
       special_skills:
         can_arrest: true
+        can_ammun: true
         can_manage:
           manage_type:
             - "up"
@@ -485,6 +489,7 @@ f3:
       time: 20
       special_skills:
         can_arrest: true
+        can_ammun: true
         can_manage:
           manage_type:
             - "up"
@@ -507,6 +512,7 @@ f3:
       time: 20
       special_skills:
         can_arrest: true
+        can_ammun: true
         can_manage:
           manage_type:
             - "up"
@@ -530,6 +536,7 @@ f3:
       time: 20
       special_skills:
         can_arrest: true
+        can_ammun: true
         can_manage:
           manage_type:
             - "up"
@@ -554,6 +561,7 @@ f3:
       time: 20
       special_skills:
         can_arrest: true
+        can_ammun: true
         can_manage:
           manage_type:
             - "up"
@@ -572,6 +580,7 @@ f3:
       time: 20
       special_skills:
         can_arrest: true
+        can_ammun: true
         can_manage:
           manage_type:
             - "up"

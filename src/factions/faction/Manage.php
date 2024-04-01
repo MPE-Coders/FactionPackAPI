@@ -22,6 +22,19 @@ class Manage
         return $this->types;
     }
 
+    public function getCanKick(): bool {
+        return in_array('kick', $this->types);
+    }
+
+    public function getCanDown(): bool {
+        return in_array('down', $this->types);
+    }
+
+    public function getCanUp(): bool {
+        return in_array('up', $this->types);
+    }
+
+
     public function setFactions(mixed $factions): void
     {
         foreach ($factions as $faction_id => $ranks_id) {
