@@ -40,7 +40,6 @@ f1:
       time: 20
       special_skills:
         can_write: true
-      can_write: true
     r8:
       name: "Старший журналист СМИ"
       price: 250000
@@ -52,14 +51,7 @@ f1:
           manage_type:
             - "up"
           factions:
-            f1:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
+            f1: "r1,r2,r3,r4,r5,r6,r7"
     r9:
       name: "Реквизитор СМИ"
       price: 500000
@@ -73,14 +65,7 @@ f1:
             - "down"
             - "kick"
           factions:
-            f1:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
+            f1: "r2,r3,r4,r5,r6,r7,r8"
     r10:
       name: "Гример СМИ"
       price: 750000
@@ -94,15 +79,7 @@ f1:
             - "down"
             - "kick"
           factions:
-            f1:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
+            f1: "r2,r3,r4,r5,r6,r7,r8,r9"
     r11:
       name: "Режиссер СМИ"
       price: 1000000
@@ -116,15 +93,7 @@ f1:
             - "down"
             - "kick"
           factions:
-            f1:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r10
+            f1: "r2,r3,r4,r5,r6,r7,r8,r10"
     r12:
       name: "Сценарист СМИ"
       price: 2500000
@@ -138,15 +107,7 @@ f1:
             - "down"
             - "kick"
           factions:
-            f1:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r11
+            f1: "r2,r3,r4,r5,r6,r7,r8,r11"
     r13:
       name: "Зам глава СМИ"
       price: 4000000
@@ -160,11 +121,7 @@ f1:
             - "down"
             - "kick"
           factions:
-            f1:
-              - r9
-              - r10
-              - r11
-              - r12
+            f1: "r9,r10,r11,r12"
     r14:
       name: "Глава СМИ"
       price: -1
@@ -178,19 +135,7 @@ f1:
             - "down"
             - "kick"
           factions:
-            f1:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
+            f1: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12"
 f2:
   type: HOSPITAL
   name: "Клиника"
@@ -248,14 +193,7 @@ f2:
           manage_type:
             - "up"
           factions:
-            f2:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
+            f2: "r1,r2,r3,r4,r5,r6,r7"
     r9:
       name: "Стоматолог"
       price: 500000
@@ -269,15 +207,7 @@ f2:
             - "down"
             - "kick"
           factions:
-            f2:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
+            f2: "r1,r2,r3,r4,r5,r6,r7,r8"
     r10:
       name: "Офтальмолог"
       price: 750000
@@ -291,16 +221,7 @@ f2:
             - "down"
             - "kick"
           factions:
-            f2:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
+            f2: "r1,r2,r3,r4,r5,r6,r7,r8,r9"
     r11:
       name: "Психолог"
       price: 1000000
@@ -314,17 +235,7 @@ f2:
             - "down"
             - "kick"
           factions:
-            f2:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
+            f2: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10"
     r12:
       name: "Хирург"
       price: 2500000
@@ -338,18 +249,7 @@ f2:
             - "down"
             - "kick"
           factions:
-            f2:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
+            f2: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11"
     r13:
       name: "Зав врач клиники"
       price: 4000000
@@ -363,11 +263,7 @@ f2:
             - "down"
             - "kick"
           factions:
-            f2:
-              - r9
-              - r10
-              - r11
-              - r12
+            f2: "r9,r10,r11,r12"
     r14:
       name: "Глав врач клиники"
       price: -1
@@ -381,19 +277,7 @@ f2:
             - "down"
             - "kick"
           factions:
-            f2:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
+            f2: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12"
 f3:
   type: ARMY
   name: "Армия"
@@ -452,14 +336,7 @@ f3:
           manage_type:
             - "up"
           factions:
-            f3:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
+            f3: "r1,r2,r3,r4,r5,r6,r7"
     r9:
       name: "Ст. Лейтенант"
       price: 500000
@@ -474,14 +351,7 @@ f3:
             - "down"
             - "kick"
           factions:
-            f3:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
+            f3: "r2,r3,r4,r5,r6,r7,r8"
     r10:
       name: "Капитан"
       price: 750000
@@ -496,15 +366,7 @@ f3:
             - "down"
             - "kick"
           factions:
-            f3:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
+            f3: "r2,r3,r4,r5,r6,r7,r8,r9"
     r11:
       name: "Майор"
       price: 1000000
@@ -519,16 +381,7 @@ f3:
             - "down"
             - "kick"
           factions:
-            f3:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
+            f3: "r2,r3,r4,r5,r6,r7,r8,r9,r10"
     r12:
       name: "Полковник"
       price: 2500000
@@ -543,17 +396,7 @@ f3:
             - "down"
             - "kick"
           factions:
-            f3:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
+            f3: "r2,r3,r4,r5,r6,r7,r8,r9,r10,r11"
     r13:
       name: "Генерал"
       price: 4000000
@@ -568,11 +411,7 @@ f3:
             - "down"
             - "kick"
           factions:
-            f3:
-              - r9
-              - r10
-              - r11
-              - r12
+            f3: "r9,r10,r11,r12"
     r14:
       name: "Главнокомандующий"
       price: -1
@@ -587,20 +426,7 @@ f3:
             - "down"
             - "kick"
           factions:
-            f3:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-              - r13
+            f3: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13"
 f4:
   type: POLICE
   name: "Полиция"
@@ -656,14 +482,7 @@ f4:
           manage_type:
             - "up"
           factions:
-            f4:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
+            f4: "r1,r2,r3,r4,r5,r6,r7"
     r9:
       name: "Ст. Лейтенант"
       price: 500000
@@ -677,14 +496,7 @@ f4:
             - "down"
             - "kick"
           factions:
-            f4:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
+            f4: "r2,r3,r4,r5,r6,r7,r8"
     r10:
       name: "Капитан"
       price: 750000
@@ -698,15 +510,7 @@ f4:
             - "down"
             - "kick"
           factions:
-            f4:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
+            f4: "r2,r3,r4,r5,r6,r7,r8,r9"
     r11:
       name: "Майор"
       price: 1000000
@@ -720,16 +524,7 @@ f4:
             - "down"
             - "kick"
           factions:
-            f4:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
+            f4: "r2,r3,r4,r5,r6,r7,r8,r9,r10"
     r12:
       name: "Полковник"
       price: 2500000
@@ -743,17 +538,7 @@ f4:
             - "down"
             - "kick"
           factions:
-            f4:
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
+            f4: "r2,r3,r4,r5,r6,r7,r8,r9,r10,r11"
     r13:
       name: "Генерал"
       price: 4000000
@@ -767,11 +552,7 @@ f4:
             - "down"
             - "kick"
           factions:
-            f4:
-              - r9
-              - r10
-              - r11
-              - r12
+            f4: "r9,r10,r11,r12"
     r14:
       name: "Главнокомандующий"
       price: -1
@@ -785,20 +566,7 @@ f4:
             - "down"
             - "kick"
           factions:
-            f4:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-              - r13
+            f4: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13"
 f5:
   type: MAFIA
   name: "Мафия"
@@ -849,14 +617,7 @@ f5:
           manage_type:
             - "up"
           factions:
-            f5:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
+            f5: "r1,r2,r3,r4,r5,r6,r7"
     r9:
       name: "Блатной"
       price: 500000
@@ -869,15 +630,7 @@ f5:
             - "down"
             - "kick"
           factions:
-            f5:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
+            f5: "r1,r2,r3,r4,r5,r6,r7,r8"
     r10:
       name: "Нарик"
       price: 750000
@@ -890,16 +643,7 @@ f5:
             - "down"
             - "kick"
           factions:
-            f5:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
+            f5: "r1,r2,r3,r4,r5,r6,r7,r8,r9"
     r11:
       name: "Контрабандист"
       price: 1000000
@@ -912,17 +656,7 @@ f5:
             - "down"
             - "kick"
           factions:
-            f5:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
+            f5: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10"
     r12:
       name: "Заведующий мафии"
       price: 2500000
@@ -935,18 +669,7 @@ f5:
             - "down"
             - "kick"
           factions:
-            f5:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
+            f5: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11"
     r13:
       name: "Зам глава мафии"
       price: 4000000
@@ -959,11 +682,7 @@ f5:
             - "down"
             - "kick"
           factions:
-            f5:
-              - r8
-              - r9
-              - r10
-              - r11
+            f5: "r8,r9,r10,r11"
     r14:
       name: "Глава мафии"
       price: -1
@@ -976,20 +695,7 @@ f5:
             - "down"
             - "kick"
           factions:
-            f5:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-              - r13
+            f5: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13"
 f6:
   type: FBI
   name: "Федеральная Служба Безопасности"
@@ -1041,14 +747,7 @@ f6:
           manage_type:
             - "up"
           factions:
-            f6:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
+            f6: "r1,r2,r3,r4,r5,r6,r7"
     r9:
       name: "Зам лидер ФСБ"
       price: 4000000
@@ -1062,11 +761,7 @@ f6:
             - "down"
             - "kick"
           factions:
-            f6:
-              - r5
-              - r6
-              - r7
-              - r8
+            f6: "r5,r6,r7,r8"
     r10:
       name: "Лидер ФСБ"
       price: -1
@@ -1080,16 +775,7 @@ f6:
             - "down"
             - "kick"
           factions:
-            f6:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
+            f6: "r1,r2,r3,r4,r5,r6,r7,r8,r9"
 f7:
   type: POLITICAL
   name: "Политика"
@@ -1107,41 +793,9 @@ f7:
             - "down"
             - "kick"
           factions:
-            f3:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-            f4:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-            f6:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
+            f3: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12"
+            f4: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12"
+            f6: "r1,r2,r3,r4,r5,r6,r7,r8"
     r2:
       name: "Депутат"
       price: 7500000
@@ -1154,41 +808,9 @@ f7:
             - "down"
             - "kick"
           factions:
-            f3:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-            f4:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-            f6:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
+            f3: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12"
+            f4: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12"
+            f6: "r1,r2,r3,r4,r5,r6,r7,r8"
     r3:
       name: "Сенатор"
       price: 10000
@@ -1201,41 +823,9 @@ f7:
             - "down"
             - "kick"
           factions:
-            f3:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-            f4:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-            f6:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
+            f3: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12"
+            f4: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12"
+            f6: "r1,r2,r3,r4,r5,r6,r7,r8"
     r4:
       name: "Зам мэра"
       price: 15000000
@@ -1248,49 +838,10 @@ f7:
             - "down"
             - "kick"
           factions:
-            f3:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-              - r13
-              - r14
-            f4:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-              - r13
-              - r14
-            f6:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-            f7:
-              - r1
+            f3: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14"
+            f4: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14"
+            f6: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10"
+            f7: "r1"
     r5:
       name: "Мэр"
       price: -1
@@ -1303,95 +854,10 @@ f7:
             - "down"
             - "kick"
           factions:
-            f1:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-              - r13
-              - r14
-            f2:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-              - r13
-              - r14
-            f3:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-              - r13
-              - r14
-            f4:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-              - r13
-              - r14
-            f5:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-              - r11
-              - r12
-              - r13
-              - r14
-            f6:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
-              - r6
-              - r7
-              - r8
-              - r9
-              - r10
-            f7:
-              - r1
-              - r2
-              - r3
-              - r4
-              - r5
+            f1: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14"
+            f2: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14"
+            f3: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14"
+            f4: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14"
+            f5: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10,r11,r12,r13,r14"
+            f6: "r1,r2,r3,r4,r5,r6,r7,r8,r9,r10"
+            f7: "r1,r2,r3,r4,r5"

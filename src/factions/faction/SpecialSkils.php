@@ -4,6 +4,11 @@ namespace XackiGiFF\FactionPackAPI\factions\faction;
 
 class SpecialSkils
 {
+    public const CAN_WRITE = "can_write";
+    public const CAN_MANAGE = "can_manage";
+    public const CAN_HEALTH = "can_health";
+    public const CAN_ARREST = "can_arrest";
+    public const CAN_AMMUNITION = "can_ammun";
 
     private bool $can_write;
     private bool $can_manage;
@@ -51,12 +56,12 @@ class SpecialSkils
         $this->can_ammun = $status;
     }
 
-    public function getCanWrite() : bool
+    public function getCanWrite(): bool
     {
         return $this->can_write;
     }
 
-    public function getCanManage() : bool
+    public function getCanManage(): bool
     {
         return $this->can_manage;
     }

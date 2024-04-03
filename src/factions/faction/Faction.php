@@ -25,43 +25,43 @@ final class Faction
         return $this->id;
     }
 
-    public function setId($faction_id) : void
+    public function setId($faction_id): void
     {
         $this->id = $faction_id;
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName($name) : void
+    public function setName($name): void
     {
         $this->name = $name;
     }
 
 
-    public function getImage() : string
+    public function getImage(): string
     {
         return $this->image ?? 'textures/items/diamond';
     }
 
-    public function setImage($image) : void
+    public function setImage($image): void
     {
         $this->image = $image;
     }
 
-    public function getType() : string
+    public function getType(): string
     {
         return $this->type;
     }
 
-    public function setType($type) : void
+    public function setType($type): void
     {
         $this->type = $type;
     }
 
-    public function initRanks($options) : array
+    public function initRanks($options): array
     {
         $this->ranks = array();
         if(!is_array($options)){
@@ -109,7 +109,7 @@ final class Faction
     {
         return isset($this->ranks[$rank_id]);
     }
-    public function getRankList($type) : array|string
+    public function getRankList($type): array|string
     {
         switch ($type) {
             default:
@@ -127,6 +127,15 @@ final class Faction
                 break;
         }
         return $rank_list;
+    }
+
+    public function isNullFaction(): bool
+    {
+        if($this->getName() == Manager::NO_FACTION){
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

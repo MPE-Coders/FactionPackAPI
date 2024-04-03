@@ -17,7 +17,8 @@ class AdminPlayerBox {
     private static AdminPlayerBox $instance;
     private string $player;
 
-    public function __construct() {
+    public function __construct()
+    {
         self::$instance = $this;
     }
 
@@ -26,7 +27,8 @@ class AdminPlayerBox {
         //var_dump(self::getPlayerName());
         $player = FactionAPI::getPlayer(self::getPlayerName());
         $faction = $player->getFaction();
-        $form = new SimpleForm(function (Player $sender, $data) : void {
+        $form = new SimpleForm(function (Player $sender, $data): void
+        {
             if ($data === NULL) {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                 return;
@@ -47,7 +49,8 @@ class AdminPlayerBox {
     }
     private function sendFactionChange($sender): void
     {
-        $form = new SimpleForm(function (Player $sender, $data) : void {
+        $form = new SimpleForm(function (Player $sender, $data): void
+        {
             if ($data === NULL) {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                 return;
@@ -56,6 +59,7 @@ class AdminPlayerBox {
             $faction_id = "f".($data + 1);
             $rank_id = $player->getFaction()->getDefaultRank()->getId();
             FactionAPI::registerPlayer(AdminPlayerBox::getPlayerName(), $faction_id, $rank_id);
+            $player->savePlayer();
 
             AdminBox::sendMainForm($sender);
         });
@@ -84,11 +88,11 @@ class AdminPlayerBox {
         return self::$instance;
     }
 
-    public function setPlayer(string $name) : void
+    public function setPlayer(string $name): void
     {
         $this->player = $name;
     }
-    public static function getPlayerName() : string
+    public static function getPlayerName(): string
     {
         return self::getInstance()->player;
     }

@@ -25,75 +25,75 @@ final class Rank
         return $this->id;
     }
 
-    public function setId($rank_id) : void
+    public function setId($rank_id): void
     {
         $this->id = $rank_id;
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function setName($name) : void
+    public function setName($name): void
     {
         $this->name = $name;
     }
 
-    public function getImage() : string
+    public function getImage(): string
     {
         return $this->image ?? 'textures/items/diamond';
     }
 
-    public function setImage($image) : void
+    public function setImage($image): void
     {
         $this->image = $image;
     }
 
-    public function getPrice() : int
+    public function getPrice(): int
     {
         return $this->price;
     }
 
-    public function setPrice($price) : void
+    public function setPrice($price): void
     {
         $this->price = $price;
     }
-    public function getPay() : int
+    public function getPay(): int
     {
         return $this->pay;
     }
 
-    public function setPay($pay) : void
+    public function setPay($pay): void
     {
         $this->pay = $pay;
     }
 
-    public function getTime() : int
+    public function getTime(): int
     {
         return $this->time;
     }
 
-    public function setTime($time) : void
+    public function setTime($time): void
     {
         $this->time = $time;
     }
-    public function isDefault() : bool
+    public function isDefault(): bool
     {
         return $this->default;
     }
 
-    public function setDefault($default) : void
+    public function setDefault($default): void
     {
         $this->default = $default;
     }
 
-    public function canWrite() : bool
+    public function canWrite(): bool
     {
         return $this->can_write;
     }
 
-    public function setCanWrite($can_write) : void
+    public function setCanWrite($can_write): void
     {
         $this->can_write = $can_write;
     }
@@ -102,41 +102,53 @@ final class Rank
     {
         $skills = new SpecialSkils();
         foreach ($special_skills as $skill => $options) {
-            if ($skill == 'can_write') {
-                $skills->setCanWrite(true);
-            } else {
-            $skills->setCanWrite(false);
+            switch ($skill) {
+                case SpecialSkils::CAN_WRITE:
+                    if($options){
+                        $skills->setCanWrite(true);
+                    } else {
+                        $skills->setCanWrite(false);
+                    }
+                    break;
+                case SpecialSkils::CAN_MANAGE:
+                    $manage = new Manage();
+                    if($options){
+                        $manage->setTypes($options['manage_type']);
+                        $manage->setFactions($options['factions']);
+                        $skills->setCanManage(true);
+                    } else {
+                        $skills->setCanManage(false);
+                    }
+                    $skills->setManage($manage);
+                    break;
+                case SpecialSkils::CAN_HEALTH:
+                    if($options) {
+                        $skills->setCanHealth(true);
+                    } else {
+                        $skills->setCanHealth(false);
+                    }
+                    break;
+                case SpecialSkils::CAN_ARREST:
+                    if($options){
+                        $skills->setCanArrest(true);
+                    } else {
+                        $skills->setCanArrest(false);
+                    }
+                    break;
+                case SpecialSkils::CAN_AMMUNITION:
+                    if($options){
+                        $skills->setCanAmmun(true);
+                    } else {
+                        $skills->setCanAmmun(false);
+                    }
+                    break;
             }
-            if($skill == 'can_manage') {
-                $manage = new Manage();
-                $manage->setTypes($options['manage_type']);
-                $manage->setFactions($options['factions']);
-                $skills->setCanManage(true);
 
-                $skills->setManage($manage);
-            } else {
-                $skills->setCanManage(false);
-            }
-            if($skill == 'can_health') {
-                $skills->setCanHealth(true);
-            } else {
-                $skills->setCanHealth(false);
-            }
-            if($skill == 'can_arrest'){
-                $skills->setCanArrest(true);
-            } else {
-                $skills->setCanArrest(false);
-            }
-            if($skill == 'can_ammun'){
-                $skills->setCanAmmun(true);
-            } else {
-                $skills->setCanAmmun(false);
-            }
         }
         $this->skills = $skills;
     }
 
-    public function getSkills() : SpecialSkils
+    public function getSkills(): SpecialSkils
     {
         return $this->skills ?? new SpecialSkils();
     }

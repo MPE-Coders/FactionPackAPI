@@ -38,9 +38,9 @@ class AdminBox {
      * @param $sender
      * @return bool
      */
-    public static function sendMainForm($sender) : bool
+    public static function sendMainForm($sender): bool
     {
-        $form = new SimpleForm(function (Player $sender, $data) : void {
+        $form = new SimpleForm(function (Player $sender, $data): void {
             if ($data === NULL) {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                 return;
@@ -64,7 +64,7 @@ class AdminBox {
 
     private static function sendAdminFactionsPage(Player $sender, $data): void
     {
-        $form = new SimpleForm(function (Player $sender, $data) : void {
+        $form = new SimpleForm(function (Player $sender, $data): void {
             if ($data === NULL) {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                 return;
@@ -86,7 +86,7 @@ class AdminBox {
     {
         $data = "f".($data + 1);
         $faction = FactionAPI::getFaction($data);
-        $form = new SimpleForm(function (Player $sender, $data) : void {
+        $form = new SimpleForm(function (Player $sender, $data): void {
             if ($data === NULL) {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                 return;
@@ -109,7 +109,7 @@ class AdminBox {
 
     private static function sendAdminPlayersPage(Player $sender, $data): void
     {
-        $form = new SimpleForm(function (Player $sender, $data) : void {
+        $form = new SimpleForm(function (Player $sender, $data): void {
             if ($data === NULL) {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                 return;
@@ -130,7 +130,7 @@ class AdminBox {
         $players = self::getInstance()->getPlayers();
         $player = FactionAPI::getPlayer($players[$data]);
         AdminBox::getAdminPlayerBox()->setPlayer($player->getName());
-        $form = new SimpleForm(function (Player $sender, $data) : void {
+        $form = new SimpleForm(function (Player $sender, $data): void {
             if ($data === NULL) {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                 return;
@@ -159,7 +159,7 @@ class AdminBox {
         $sender->sendForm($form);
     }
 
-    public function getPlayers() : array
+    public function getPlayers(): array
     {
         return $this->players;
     }
@@ -169,7 +169,7 @@ class AdminBox {
         return self::$instance;
     }
 
-    public static function getAdminPlayerBox() : AdminPlayerBox
+    public static function getAdminPlayerBox(): AdminPlayerBox
     {
         return self::getInstance()->adminBoxPlayerBox;
     }

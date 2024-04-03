@@ -26,7 +26,7 @@ class Manager
 
     }
 
-    public static function addToManager($model, $slot, $object) : void
+    public static function addToManager($model, $slot, $object): void
     {
         self::$$model[$slot] =  $object;
     }
@@ -36,33 +36,33 @@ class Manager
         unset(self::$$model[$slot]);
     }
 
-    public static function addDataFolderPath($path) : void
+    public static function addDataFolderPath($path): void
     {
         self::$dataFolderPath = $path;
     }
 
-    public static function getDataFolderPath() : string
+    public static function getDataFolderPath(): string
     {
         return self::$dataFolderPath;
     }
 
-    public static function getFaction($faction_id) : Faction
+    public static function getFaction($faction_id): Faction
     {
         return self::$factions[$faction_id] ?? Manager::getNullFaction();
     }
 
-
-    public static function getPlayer($name) : CustomPlayer|false
-    {
-        return self::$users[$name] ?? false;
+    public static function getPlayer($name): CustomPlayer {
+        if(!isset(self::$users[$name])) {
+            self::$users[$name] = new CustomPlayer($name);
+        }
+        return self::$users[$name];
     }
-
     public static function getRank($faction, mixed $rank_id): Rank
     {
         return $faction->getRank($rank_id) ?? $faction->getRank(self::DEFAULT_RANK);
     }
 
-    public static function nullFaction() : Faction
+    public static function nullFaction(): Faction
     {
         $faction = new Faction();
         $faction->setId(self::NULL_FACTION);
@@ -79,7 +79,7 @@ class Manager
         return self::$factions[self::NULL_FACTION];
     }
 
-    public static function nullRank() : array
+    public static function nullRank(): array
     {
         return ["ranks" =>
                     [ Manager::NULL_RANK =>
@@ -95,17 +95,17 @@ class Manager
         ];
     }
 
-    public static function isCorrectRank($faction, mixed $rank_id) : bool
+    public static function isCorrectRank($faction, mixed $rank_id): bool
     {
         return $faction->checkRank($rank_id);
     }
 
-    public static function isCorrectFaction(mixed $faction_id) : bool
+    public static function isCorrectFaction(mixed $faction_id): bool
     {
         return isset(self::$factions[$faction_id]);
     }
 
-    public static function getFactionList($type) : array|string
+    public static function getFactionList($type): array|string
     {
         switch ($type) {
             default:

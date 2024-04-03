@@ -12,22 +12,23 @@ use pocketmine\player\Player;
 use XackiGiFF\FactionPackAPI\FactionPackAPI;
 use XackiGiFF\FactionPackAPI\factions\api\FactionAPI;
 use XackiGiFF\FactionPackAPI\factions\faction\Faction;
+use XackiGiFF\FactionPackAPI\factions\faction\SpecialSkils;
 use XackiGiFF\TerminalLogger\utils\TerminalLogger;
 use pocketmine\item\VanillaItems;
 use pocketmine\Server;
+use function Symfony\Component\String\b;
 
 class FormBox {
 
     public function __construct() {
     }
-    public static function sendMainForm($sender) : bool
+    public static function sendMainForm(Player $sender): bool
     {
-        $form = new SimpleForm(function (Player $sender, $data) : void {
+        $form = new SimpleForm(function (Player $sender, $data): void {
             if ($data === NULL) {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
                 return;
             }
-            var_dump($data);
             self::sendJobPage($sender, $data);
         });
         $form->setTitle(FactionPackAPI::PREFIX);
@@ -48,112 +49,114 @@ class FormBox {
     /**
      * @throws \JsonException
      */
-    public static function sendJobPage($sender, $data) : bool
+    public static function sendJobPage(Player $sender, $data): bool
     {
         $data = "f".($data + 1);
-        //var_dump($data);
-        try {
-            $faction = FactionAPI::getFaction($data);
-            $faction_id = $faction->getId();
-            $rank_id = $faction->getDefaultRank()->getId();
-            $member = FactionAPI::registerPlayer($sender->getName(), $faction_id, $rank_id);
-            $form = new ModalForm(function (Player $sender, $data): void {
-                $member = FactionAPI::getPlayer($sender->getName());
+        $faction = FactionAPI::getFaction($data);
+        $faction_id = $faction->getId();
+        $rank_id = $faction->getDefaultRank()->getId();
+        $member = FactionAPI::registerPlayer($sender->getName(), $faction_id, $rank_id);
+        $form = new ModalForm(function (Player $sender, $data): void {
+            $member = FactionAPI::getPlayer($sender->getName());
 
-                if ($data === NULL) {
-                    $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
-                    $member->unregisterPlayer();
-                    return;
-                }
-                if ($data === true) {
-                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы вступили в фракцию: " . $member->getFaction()->getName());
-                }
-                if ($data === false) {
-                    self::sendMainForm($sender);
-                    $member->unregisterPlayer();
-                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы решили не вступать");
-                }
-            });
-            $form->setTitle(FactionPackAPI::PREFIX);
-            $skills = "";
-            if($member->getRank()->getSkills()->getCanWrite()){
-                $skills .= "- Публиковать новости" . PHP_EOL;
-            }
-            if($member->getRank()->getSkills()->getCanHealth()){
-                $skills .= "- Набор аптечки для лечения" . PHP_EOL;
-            }
-            if($member->getRank()->getSkills()->getCanManage()){
-                $faction_ids = $member->getRank()->getSkills()->getManage()->getFactionsIds();
-                $skills .= "- Власть управления подчиненными:" . PHP_EOL;
-                foreach ($faction_ids as $faction_id){
-                    $faction_name = FactionAPI::getFaction($faction_id)->getName();
-                    $ranks_names = $member->getRank()->getSkills()->getManage()->getFactionRanks($faction_id);
-                    $skills .= $faction_name . ":" . PHP_EOL;
-                    foreach ($ranks_names as $ranks_name) {
-                        $skills .= '* ' . $ranks_name . PHP_EOL;
-                    }
-                }
-            }
-            if($member->getRank()->getSkills()->getCanArrest()){
-                $skills .= "- Арестовывать игроков наручниками" . PHP_EOL;
-            }
-            if($member->getRank()->getSkills()->getCanAmmun()){
-                $skills .= "- Получить патроны" . PHP_EOL;
-            }
-
-            if($skills !== ''){
-                $skills = "§eВам будет доступно: " . PHP_EOL . $skills;
-            }
-
-            $form->setContent("§eВы хотите вступить в фракцию на работу {$member->getFaction()->getName()}" . PHP_EOL .
-                              "§eВаша будущая роль {$member->getRank()->getName()}" . PHP_EOL .
-                              "§eВаша зарплата составит: {$member->getRank()->getPrice()}" . PHP_EOL .
-                              "$skills"); // убраны фигурные скобки, причина: утверждено phpStorm как не обязательное.
-            $form->setButton1("Подтвердить");
-            $form->setButton2("Отказаться");
-            $sender->sendForm($form);
-        } catch (ErrorException $exception) {
-            TerminalLogger::critical("Ошибка! ". $exception->getMessage());
-        }
-        return true;
-    }
-    public static function sendJobMainPage($sender) : bool
-    {
-        $form = new SimpleForm(function (Player $sender, $data) : void {
             if ($data === NULL) {
                 $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                $member->unregisterPlayer();
                 return;
             }
-            $member = FactionAPI::getPlayer($sender->getName());
-            if($data == 'can_write'){
-                // TODO: Открыть страницу отправки новостей
-                self::sendNewsPage($sender);
+            if ($data === true) {
+                $sender->sendMessage(FactionPackAPI::PREFIX . "Вы вступили в фракцию: " . $member->getFaction()->getName());
             }
-            if($data == 'can_health'){
-                // TODO: Выдать игроку аптечку
-                self::sendMed($sender);
-            }
-            if($data == 'can_arrest'){
-                // TODO: Выдать игроку наручники
-                self::sendCuff($sender);
-            }
-            if($data == 'can_ammun'){
-                // TODO: Выдать игроку патроны
-                self::sendAmmun($sender);
-            }
-            if($data == 'can_manage'){
-                // TODO: Открыть страницу управления фракцией\фракциями, которые доступны игроку для управления
-                self::sendManagePage($sender);
-            }
-            if($data === 'quit'){
+            if ($data === false) {
+                self::sendMainForm($sender);
                 $member->unregisterPlayer();
-                $sender->sendMessage(FactionPackAPI::PREFIX . "Вы решили уволиться.");
+                $sender->sendMessage(FactionPackAPI::PREFIX . "Вы решили не вступать");
+            }
+        });
+        $form->setTitle(FactionPackAPI::PREFIX);
+        $skills = "";
+        if($member->getRank()->getSkills()->getCanWrite()){
+            $skills .= "- Публиковать новости" . PHP_EOL;
+        }
+        if($member->getRank()->getSkills()->getCanHealth()){
+            $skills .= "- Набор аптечки для лечения" . PHP_EOL;
+        }
+        if($member->getRank()->getSkills()->getCanManage()){
+            $faction_ids = $member->getRank()->getSkills()->getManage()->getFactionsIds();
+            $skills .= "- Власть управления подчиненными:" . PHP_EOL;
+            foreach ($faction_ids as $faction_id){
+                $faction_name = FactionAPI::getFaction($faction_id)->getName();
+                $ranks_names = $member->getRank()->getSkills()->getManage()->getFactionRanks($faction_id);
+                $skills .= $faction_name . ":" . PHP_EOL;
+                foreach ($ranks_names as $ranks_name) {
+                    $skills .= '* ' . $ranks_name . PHP_EOL;
+                }
+            }
+        }
+        if($member->getRank()->getSkills()->getCanArrest()){
+            $skills .= "- Арестовывать игроков наручниками" . PHP_EOL;
+        }
+        if($member->getRank()->getSkills()->getCanAmmun()){
+            $skills .= "- Получить патроны" . PHP_EOL;
+        }
+
+        if($skills !== ''){
+            $skills = "§eВам будет доступно: " . PHP_EOL . $skills;
+        }
+
+        $form->setContent("§eВы хотите вступить в фракцию на работу {$member->getFaction()->getName()}" . PHP_EOL .
+                          "§eВаша будущая роль {$member->getRank()->getName()}" . PHP_EOL .
+                          "§eВаша зарплата составит: {$member->getRank()->getPrice()}" . PHP_EOL .
+                          "$skills"); // убраны фигурные скобки, причина: утверждено phpStorm как не обязательное.
+        $form->setButton1("Подтвердить");
+        $form->setButton2("Отказаться");
+        $sender->sendForm($form);
+        return true;
+    }
+    public static function sendJobMainPage(Player $sender): bool
+    {
+        $form = new SimpleForm(function (Player $sender, $data): void {
+            switch ($data) {
+                case 'is_admin':
+                    FormBox::getAdminBox()->sendMainForm($sender);
+                    break;
+                case SpecialSkils::CAN_WRITE:
+                    // TODO: Открыть страницу отправки новостей
+                    self::sendNewsPage($sender);
+                    break;
+                case SpecialSkils::CAN_HEALTH:
+                    // TODO: Выдать игроку аптечку
+                    self::sendMed($sender);
+                    break;
+                case SpecialSkils::CAN_ARREST:
+                    // TODO: Выдать игроку наручники
+                    self::sendCuff($sender);
+                    break;
+                case SpecialSkils::CAN_AMMUNITION:
+                    // TODO: Выдать игроку патроны
+                    self::sendAmmun($sender);
+                    break;
+                case SpecialSkils::CAN_MANAGE:
+                    // TODO: Открыть страницу управления фракцией\фракциями, которые доступны игроку для управления
+                    self::sendManagePage($sender);
+                    break;
+                case 'quit':
+                    $member = FactionAPI::getPlayer($sender->getName());
+                    $member->unregisterPlayer();
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Вы решили уволиться.");
+                    break;
+                default:
+                    $sender->sendMessage(FactionPackAPI::PREFIX . "Форма закрыта.");
+                    break;
             }
         });
         $member = FactionAPI::getPlayer($sender->getName());
         $form->setTitle(FactionPackAPI::PREFIX);
         $form->setContent("§eВаш ранг: {$member->getRank()->getName()}.\n Ваша работа: {$member->getFaction()->getName()}.");
 
+        if($sender->hasPermission("faction.job.admin")){
+            $form->addButton("§c§lАдмин панель", -1, "", "is_admin");
+        }
         if($member->getRank()->getSkills()->getCanWrite()){
             $form->addButton("Написать новость", -1, "", "can_write");
         }
@@ -189,7 +192,7 @@ class FormBox {
         $form->setTitle(FactionPackAPI::PREFIX);
         $form->addLabel("Введите новость, пусть она всех шокирует!");
         $form->addInput("Введите текст:");
-        $form->sendToPlayer($player);
+        $player->sendForm($form);
     }
     public static function sendManagePage(Player $sender): void
     {
@@ -244,7 +247,7 @@ class FormBox {
     public static function sendRankPromotionPage(Player $sender): void
     {
         $member = FactionAPI::getPlayer($sender->getName());
-        if ($member !== false && $member->getFaction() !== null) {
+        if ($member->getFaction() !== null) {
             $factionId = $member->getFaction()->getId();
             $factionMembers = FactionAPI::getFactionMembers($factionId);
             $form = new SimpleForm(function (Player $sender, $data) use ($factionMembers, $factionId, $member): void {
@@ -313,7 +316,7 @@ class FormBox {
     {
         $member = FactionAPI::getPlayer($sender->getName());
 
-        if ($member !== false && $member->getFaction() !== null) {
+        if ($member->getFaction() !== null) {
             $factionId = $member->getFaction()->getId();
             $factionMembers = FactionAPI::getFactionMembers($factionId);
 
@@ -362,7 +365,7 @@ class FormBox {
     {
         $member = FactionAPI::getPlayer($sender->getName());
 
-        if ($member !== false && $member->getFaction() !== null) {
+        if (!$member->getFaction()->isNullFaction()) {
             $factionId = $member->getFaction()->getId();
             $factionMembers = FactionAPI::getFactionMembers($factionId);
 
@@ -398,6 +401,7 @@ class FormBox {
             $form->setContent("Выберите игрока для увольнения из фракции:");
 
             foreach ($factionMembers as $factionMember) {
+                // TODO: убрать халтуру, оставленную Prizmar кодером
                 // Проверяем, что фракция игрока равна одной из указанных
                 if (in_array($factionMember->getFaction()->getId(), ['f3', 'f4', 'f6'])) {
                     $form->addButton($factionMember->getName());
@@ -429,7 +433,7 @@ class FormBox {
         $inventory->addItem(VanillaItems::WHEAT_SEEDS()->setCount(1)->setCustomName("§eПатроны"));
     }
 
-    public static function getAdminBox() : AdminBox
+    public static function getAdminBox(): AdminBox
     {
         return new AdminBox();
     }

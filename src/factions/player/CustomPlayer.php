@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace XackiGiFF\FactionPackAPI\factions\player;
 
-use JsonException;
 use pocketmine\utils\Config;
 use XackiGiFF\FactionPackAPI\factions\faction\Faction;
 use XackiGiFF\FactionPackAPI\factions\faction\Rank;
@@ -33,7 +32,7 @@ class CustomPlayer
         $this->config = new Config($this->userDataFolder . $playerName . '_data.yml',Config::YAML);
     }
 
-    public function getFaction() : Faction
+    public function getFaction(): Faction
     {
         if(isset($this->faction)){
             if($this->faction instanceof Faction) {
@@ -73,7 +72,7 @@ class CustomPlayer
         }
     }
 
-    public function getRank() : Rank
+    public function getRank(): Rank
     {
         $faction = self::getFaction();
         $faction_name = $faction->getName();
@@ -87,7 +86,7 @@ class CustomPlayer
                 if(Manager::isCorrectRank($faction, $rank_id)){
                     $this->rank = $faction->getRank($rank_id);
                 } else {
-                    TerminalLogger::critical("Конфиг ссылкается на несуществующий ранг!");
+                    TerminalLogger::critical("Конфиг ссылается на несуществующий ранг!");
                     TerminalLogger::warning("Ранга ".$rank_id." не существует!");
                     TerminalLogger::warning("Доступные ранги у фракции \"".$faction_name."\":");
                     TerminalLogger::notice(PHP_EOL.$faction->getRankList(Faction::TYPE_STRING));
@@ -103,7 +102,7 @@ class CustomPlayer
         return $this->rank;
     }
 
-    public function setRank($rank_id) : void
+    public function setRank($rank_id): void
     {   if(isset($rank_id)) {
         if(Manager::isCorrectRank(self::getFaction(), $rank_id)){
             $this->rank = self::getFaction()->getRank($rank_id);
@@ -123,20 +122,17 @@ class CustomPlayer
     {
         return $this->config;
     }
-    public function getLimit() : int
+    public function getLimit(): int
     {
         return self::getConfig()->getNested("limit");
     }
 
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @throws JsonException
-     */
-    public function savePlayer() : void
+    public function savePlayer(): void
     {
 
         $serializedContents = [ "faction" => self::getFaction()->getId(),
@@ -146,7 +142,7 @@ class CustomPlayer
         Manager::addToManager(Manager::MODEL_USERS, self::getName(), $this);
     }
 
-    public function unregisterPlayer() : void
+    public function unregisterPlayer(): void
     {
         Manager::delFromManager(Manager::MODEL_USERS, self::getName());
         unlink(self::getConfig()->getPath());

@@ -40,7 +40,7 @@ class LoaderFaction
         return $faction;
     }
 
-    public static function registerNullFaction() : Faction
+    public static function registerNullFaction(): Faction
     {
 
         return Manager::nullFaction();

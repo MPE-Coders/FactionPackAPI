@@ -1,10 +1,11 @@
 ---
 name: FactionPackAPI
-version: 1.1.0
+version: 1.8.0-ALPHA
 main: XackiGiFF\FactionPackAPI\FactionPackAPI
 api: 5.7.1
 src-namespace-prefix: XackiGiFF\FactionPackAPI
 authors:
+  - "Prizmar"
   - "XackiGiFF"
   - "MPE: Coders"
 website: vk.com/mpe_coders

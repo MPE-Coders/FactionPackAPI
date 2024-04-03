@@ -18,19 +18,23 @@ class Manage
     {
         $this->types = $manage_type;
     }
-    public function getTypes() : array {
+    public function getTypes(): array
+    {
         return $this->types;
     }
 
-    public function getCanKick(): bool {
+    public function getCanKick(): bool
+    {
         return in_array('kick', $this->types);
     }
 
-    public function getCanDown(): bool {
+    public function getCanDown(): bool
+    {
         return in_array('down', $this->types);
     }
 
-    public function getCanUp(): bool {
+    public function getCanUp(): bool
+    {
         return in_array('up', $this->types);
     }
 
@@ -63,7 +67,7 @@ class Manage
      * ];
      * @return array
      */
-    public function getFactions() : array
+    public function getFactions(): array
     {
         return $this->factions;
     }
@@ -73,7 +77,8 @@ class Manage
      * @return array
      */
 
-    public function getFactionsNames() : array {
+    public function getFactionsNames(): array
+    {
         $factions = [];
         foreach ($this->factions as $faction_manage){
             $factions[] = FactionAPI::getFaction($faction_manage['faction_id'])->getName();
@@ -87,7 +92,8 @@ class Manage
      * @return array
      */
 
-    public function getFactionRanks($faction_id) : array {
+    public function getFactionRanks($faction_id): array
+    {
         $ranks = [];
         if(isset($this->factions[$faction_id])){
             foreach ($this->factions[$faction_id]['ranks'] as $rank_id){
@@ -101,7 +107,8 @@ class Manage
         }
     }
 
-    public function getFactionsIds() : array {
+    public function getFactionsIds(): array
+    {
         $factions = [];
         foreach ($this->factions as $faction_manage){
             $factions[] = FactionAPI::getFaction($faction_manage['faction_id'])->getId();
